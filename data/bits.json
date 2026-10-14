@@ -6,7 +6,7 @@
   "bookingHandle": "@dhruvbakshiwho",
   "bookingUrl": "https://www.instagram.com/dhruvbakshiwho/",
   "about": [
-    "Jasmeet Singh, better known as Jimmy Oye, is a stand-up comedian out of Chandigarh–Mohali. His bits bounce between hostel life, Punjabi English chaos, city tours, and club-night crowd energy.",
+    "Jasmeet Singh, better known as Jimmy Oye, is a stand-up comedian out of Chandigarh\u2013Mohali. His bits bounce between hostel life, Punjabi English chaos, city tours, and club-night crowd energy.",
     "He plays rooms across North India and keeps the jokes close to real life. For show queries, reach his booking contact."
   ],
   "bits": [
@@ -14,7 +14,7 @@
       "id": "sleeping-naked",
       "title": "Sleeping Naked",
       "subtitle": "Viral Bit",
-      "note": "Jimmy’s biggest clip by a mile — 9.5 million views and still packing a punch.",
+      "note": "Jimmy\u2019s biggest clip by a mile \u2014 9.5 million views and still packing a punch.",
       "instagramUrl": "https://www.instagram.com/p/Cy8Capvvxlj/",
       "shortcode": "Cy8Capvvxlj",
       "cover": "/posters/sleeping-naked.jpg",
@@ -34,7 +34,7 @@
       "id": "unhealthy-trend",
       "title": "Unhealthy Trend",
       "subtitle": "Health Bit",
-      "note": "The most un-healthy take on the healthy trend — sharp timing, huge reach.",
+      "note": "The most un-healthy take on the healthy trend \u2014 sharp timing, huge reach.",
       "instagramUrl": "https://www.instagram.com/p/CyKkLH5ojOV/",
       "shortcode": "CyKkLH5ojOV",
       "cover": "/posters/unhealthy-trend.jpg",
@@ -44,7 +44,7 @@
       "id": "bakri-ka-doodh",
       "title": "Bakri Ka Doodh",
       "subtitle": "Hostel Life",
-      "note": "A hostel bit that stuck — weird, warm, and very Jimmy.",
+      "note": "A hostel bit that stuck \u2014 weird, warm, and very Jimmy.",
       "instagramUrl": "https://www.instagram.com/p/C4UZmkjvJ65/",
       "shortcode": "C4UZmkjvJ65",
       "cover": "/posters/bakri-ka-doodh.jpg",
@@ -54,21 +54,21 @@
       "id": "panjabis-english",
       "title": "Panjabis & English",
       "subtitle": "Language",
-      "note": "Punjabi–English chaos with the crowd right there with him.",
+      "note": "Punjabi\u2013English chaos with the crowd right there with him.",
       "instagramUrl": "https://www.instagram.com/p/DdDHXKWhEqo/",
       "shortcode": "DdDHXKWhEqo",
       "cover": "/posters/panjabis-english.jpg",
-      "accent": "#00D4C8"
+      "accent": "#7CFF6B"
     },
     {
       "id": "motivational-speaker",
       "title": "Motivational Speaker",
       "subtitle": "Stage Bit",
-      "note": "A crowd-favorite stage bit with serious heat — nearly two million views.",
+      "note": "A crowd-favorite stage bit with serious heat \u2014 nearly two million views.",
       "instagramUrl": "https://www.instagram.com/p/C4HxBYOPyBA/",
       "shortcode": "C4HxBYOPyBA",
       "cover": "/posters/motivational-speaker.jpg",
-      "accent": "#7CFF6B"
+      "accent": "#FFB800"
     },
     {
       "id": "bangalore-is-fun",
@@ -78,17 +78,17 @@
       "instagramUrl": "https://www.instagram.com/p/Dc6TN-sBmDN/",
       "shortcode": "Dc6TN-sBmDN",
       "cover": "/posters/bangalore-is-fun.jpg",
-      "accent": "#FFB800"
+      "accent": "#B8A0FF"
     },
     {
       "id": "girls-are-complex",
       "title": "Girls Are Complex",
       "subtitle": "Relationship Bit",
-      "note": "Relationship chaos told Jimmy’s way — clean setup, loud payoff.",
+      "note": "Relationship chaos told Jimmy\u2019s way \u2014 clean setup, loud payoff.",
       "instagramUrl": "https://www.instagram.com/p/CxhX1FBvi49/",
       "shortcode": "CxhX1FBvi49",
       "cover": "/posters/girls-are-complex.jpg",
-      "accent": "#B8A0FF"
+      "accent": "#FF2D6A"
     },
     {
       "id": "baniyas-are-intelligent",
@@ -98,13 +98,13 @@
       "instagramUrl": "https://www.instagram.com/p/CvciNHnAsB7/",
       "shortcode": "CvciNHnAsB7",
       "cover": "/posters/baniyas-are-intelligent.jpg",
-      "accent": "#FFB800"
+      "accent": "#00D4C8"
     },
     {
       "id": "mohali-momos",
       "title": "Mohali Momos",
       "subtitle": "Local Bit",
-      "note": "Hometown flavor — Mohali, momos, and a room that gets it.",
+      "note": "Hometown flavor \u2014 Mohali, momos, and a room that gets it.",
       "instagramUrl": "https://www.instagram.com/p/DHkq6x-BsXP/",
       "shortcode": "DHkq6x-BsXP",
       "cover": "/posters/mohali-momos.jpg",
@@ -114,7 +114,7 @@
       "id": "girls-are-superior",
       "title": "Girls Are Superior",
       "subtitle": "Gender Bit",
-      "note": "Another strong relationship bit from the same lane — big reach, easy laugh.",
+      "note": "Another strong relationship bit from the same lane \u2014 big reach, easy laugh.",
       "instagramUrl": "https://www.instagram.com/p/CvpinkRvg4D/",
       "shortcode": "CvpinkRvg4D",
       "cover": "/posters/girls-are-superior.jpg",
@@ -128,7 +128,94 @@
       "instagramUrl": "https://www.instagram.com/p/CwCJZRIv5kL/",
       "shortcode": "CwCJZRIv5kL",
       "cover": "/posters/girls-vs-boys.jpg",
+      "accent": "#F4E04D"
+    },
+    {
+      "id": "government-hospital",
+      "title": "Government Hospital",
+      "subtitle": "Dad Joke",
+      "note": "Dad-joke energy in a hospital setting \u2014 nearly a million views.",
+      "instagramUrl": "https://www.instagram.com/p/C1UOdTXvzMW/",
+      "shortcode": "C1UOdTXvzMW",
+      "cover": "/posters/government-hospital.jpg",
       "accent": "#00D4C8"
+    },
+    {
+      "id": "punjabis",
+      "title": "Punjabis",
+      "subtitle": "Crowd Bit",
+      "note": "Crowd work with Punjabi flavor and big recent heat.",
+      "instagramUrl": "https://www.instagram.com/p/DeHgTxpBUC6/",
+      "shortcode": "DeHgTxpBUC6",
+      "cover": "/posters/punjabis.jpg",
+      "accent": "#FF6B2C"
+    },
+    {
+      "id": "karate",
+      "title": "Karate",
+      "subtitle": "Physical Bit",
+      "note": "Physical comedy timing with a clean punchline.",
+      "instagramUrl": "https://www.instagram.com/p/Cy8osLnPcMN/",
+      "shortcode": "Cy8osLnPcMN",
+      "cover": "/posters/karate.jpg",
+      "accent": "#7CFF6B"
+    },
+    {
+      "id": "jordans",
+      "title": "Jordans",
+      "subtitle": "Fashion Bit",
+      "note": "Sneaker status and joke status in one clip.",
+      "instagramUrl": "https://www.instagram.com/p/DeBw2Jnh5FC/",
+      "shortcode": "DeBw2Jnh5FC",
+      "cover": "/posters/jordans.jpg",
+      "accent": "#FFB800"
+    },
+    {
+      "id": "hosting-is-fun",
+      "title": "Hosting is Fun",
+      "subtitle": "Hosting Bit",
+      "note": "Hosting chaos \u2014 dating, food, and the laugh in between.",
+      "instagramUrl": "https://www.instagram.com/p/CzkjV_kvoPQ/",
+      "shortcode": "CzkjV_kvoPQ",
+      "cover": "/posters/hosting-is-fun.jpg",
+      "accent": "#B8A0FF"
+    },
+    {
+      "id": "ghatiya-break-up",
+      "title": "Ghatiya Break-up",
+      "subtitle": "Breakup Bit",
+      "note": "Breakup bit with strong likes and sharp timing.",
+      "instagramUrl": "https://www.instagram.com/p/C8EqQmnPjpb/",
+      "shortcode": "C8EqQmnPjpb",
+      "cover": "/posters/ghatiya-break-up.jpg",
+      "accent": "#FF2D6A"
+    },
+    {
+      "id": "school-result",
+      "title": "School Result",
+      "subtitle": "School Bit",
+      "note": "School result panic \u2014 everyone knows this feeling.",
+      "instagramUrl": "https://www.instagram.com/p/C30A5JvvN8f/",
+      "shortcode": "C30A5JvvN8f",
+      "cover": "/posters/school-result.jpg",
+      "accent": "#00D4C8"
+    },
+    {
+      "id": "bangalore-diaries",
+      "title": "Bangalore Diaries",
+      "subtitle": "City Diaries",
+      "note": "Bangalore city diaries energy from a strong recent clip.",
+      "instagramUrl": "https://www.instagram.com/p/DdlzFbRpRXV/",
+      "shortcode": "DdlzFbRpRXV",
+      "cover": "/posters/bangalore-diaries.jpg",
+      "accent": "#FF6B2C"
     }
+  ],
+  "heroFloatIds": [
+    "baniyas-are-intelligent",
+    "girls-are-superior",
+    "girls-vs-boys",
+    "girls-are-complex",
+    "unhealthy-trend"
   ]
 }

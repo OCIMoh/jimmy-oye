@@ -9,7 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 type Bit = (typeof bitsData.bits)[number];
 
-const CACHE_BUST = "v7-twelve-posters";
+const CACHE_BUST = "v8-twenty-posters";
 
 export default function PosterWall() {
   const [active, setActive] = useState<Bit | null>(null);
@@ -204,7 +204,22 @@ export default function PosterWall() {
     setFormSent(true);
   }
 
-  const floatBits = bitsData.bits.slice(0, 4);
+  const floatIds =
+    "heroFloatIds" in bitsData && Array.isArray(bitsData.heroFloatIds)
+      ? bitsData.heroFloatIds
+      : [];
+  const floatBits = (
+    floatIds.length
+      ? floatIds
+          .map((id) => bitsData.bits.find((b) => b.id === id))
+          .filter(Boolean)
+      : bitsData.bits.slice(0, 5)
+  ) as Bit[];
+  // Extra depth on the opening: oldest five up front, plus three more high-view posters.
+  const heroWallBits = [
+    ...floatBits,
+    ...bitsData.bits.filter((b) => !floatBits.some((f) => f.id === b.id)).slice(0, 3),
+  ].slice(0, 8);
 
   return (
     <>
@@ -228,7 +243,7 @@ export default function PosterWall() {
         <div className="hero__paper" aria-hidden="true" />
         <div className="hero__glow" aria-hidden="true" />
         <div className="hero__floats" ref={floatRef} aria-hidden="true">
-          {floatBits.map((bit, i) => (
+          {heroWallBits.map((bit, i) => (
             <div
               key={bit.id}
               className={`hero-float__card hero-float__card--${i + 1}`}
@@ -266,10 +281,11 @@ export default function PosterWall() {
         <div className="wall-paper" aria-hidden="true" />
         <div className="section__head">
           <p className="section__kicker">The wall</p>
-          <h2 className="section__title">Twelve posters. Twelve bits.</h2>
+          <h2 className="section__title">Twenty posters. Twenty bits.</h2>
           <p className="section__text">
-            A fuller wall of Jimmy’s strongest clips. Pull a poster, feel the
-            bit, then grab tickets or send a booking enquire.
+            Jimmy’s strongest clips by views, with the oldest five of that set
+            floating on the opening screen. Pull a poster, feel the bit, then
+            grab tickets or send a booking enquire.
           </p>
         </div>
         <div className="poster-wall" ref={wallRef}>

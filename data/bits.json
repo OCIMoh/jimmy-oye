@@ -51,6 +51,16 @@
       "accent": "#FF6B2C"
     },
     {
+      "id": "panjabis-english",
+      "title": "Panjabis & English",
+      "subtitle": "Language",
+      "note": "Punjabi–English chaos with the crowd right there with him.",
+      "instagramUrl": "https://www.instagram.com/p/DdDHXKWhEqo/",
+      "shortcode": "DdDHXKWhEqo",
+      "cover": "/posters/panjabis-english.jpg",
+      "accent": "#00D4C8"
+    },
+    {
       "id": "motivational-speaker",
       "title": "Motivational Speaker",
       "subtitle": "Stage Bit",
@@ -61,6 +71,16 @@
       "accent": "#7CFF6B"
     },
     {
+      "id": "bangalore-is-fun",
+      "title": "Bangalore Is Fun",
+      "subtitle": "City Tour",
+      "note": "City energy, crowd work, and a bit that travels well.",
+      "instagramUrl": "https://www.instagram.com/p/Dc6TN-sBmDN/",
+      "shortcode": "Dc6TN-sBmDN",
+      "cover": "/posters/bangalore-is-fun.jpg",
+      "accent": "#FFB800"
+    },
+    {
       "id": "girls-are-complex",
       "title": "Girls Are Complex",
       "subtitle": "Relationship Bit",
@@ -69,6 +89,46 @@
       "shortcode": "CxhX1FBvi49",
       "cover": "/posters/girls-are-complex.jpg",
       "accent": "#B8A0FF"
+    },
+    {
+      "id": "baniyas-are-intelligent",
+      "title": "Baniyas Are Intelligent",
+      "subtitle": "Smart Bit",
+      "note": "A sharp cultural bit with over a million views and clean timing.",
+      "instagramUrl": "https://www.instagram.com/p/CvciNHnAsB7/",
+      "shortcode": "CvciNHnAsB7",
+      "cover": "/posters/baniyas-are-intelligent.jpg",
+      "accent": "#FFB800"
+    },
+    {
+      "id": "mohali-momos",
+      "title": "Mohali Momos",
+      "subtitle": "Local Bit",
+      "note": "Hometown flavor — Mohali, momos, and a room that gets it.",
+      "instagramUrl": "https://www.instagram.com/p/DHkq6x-BsXP/",
+      "shortcode": "DHkq6x-BsXP",
+      "cover": "/posters/mohali-momos.jpg",
+      "accent": "#FF6B2C"
+    },
+    {
+      "id": "girls-are-superior",
+      "title": "Girls Are Superior",
+      "subtitle": "Gender Bit",
+      "note": "Another strong relationship bit from the same lane — big reach, easy laugh.",
+      "instagramUrl": "https://www.instagram.com/p/CvpinkRvg4D/",
+      "shortcode": "CvpinkRvg4D",
+      "cover": "/posters/girls-are-superior.jpg",
+      "accent": "#FF2D6A"
+    },
+    {
+      "id": "girls-vs-boys",
+      "title": "Girls vs Boys",
+      "subtitle": "Battle Bit",
+      "note": "Classic boys-versus-girls energy with over a million views.",
+      "instagramUrl": "https://www.instagram.com/p/CwCJZRIv5kL/",
+      "shortcode": "CwCJZRIv5kL",
+      "cover": "/posters/girls-vs-boys.jpg",
+      "accent": "#00D4C8"
     }
   ]
 }

@@ -9,7 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 type Bit = (typeof bitsData.bits)[number];
 
-const CACHE_BUST = "v6-asset-swap";
+const CACHE_BUST = "v7-twelve-posters";
 
 export default function PosterWall() {
   const [active, setActive] = useState<Bit | null>(null);
@@ -266,10 +266,10 @@ export default function PosterWall() {
         <div className="wall-paper" aria-hidden="true" />
         <div className="section__head">
           <p className="section__kicker">The wall</p>
-          <h2 className="section__title">Six posters. Six bits.</h2>
+          <h2 className="section__title">Twelve posters. Twelve bits.</h2>
           <p className="section__text">
-            Walk up to the wall, pull a poster, feel the bit, then grab tickets
-            or send a booking enquire.
+            A fuller wall of Jimmy’s strongest clips. Pull a poster, feel the
+            bit, then grab tickets or send a booking enquire.
           </p>
         </div>
         <div className="poster-wall" ref={wallRef}>

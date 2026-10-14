@@ -441,6 +441,13 @@ img {
   }
 }
 
+@media (min-width: 1200px) {
+  .poster-wall {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.85rem 1.5rem;
+  }
+}
+
 .poster {
   --poster-accent: var(--hot);
   position: relative;

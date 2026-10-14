@@ -32,33 +32,55 @@ export default function PosterWall() {
     );
   }, []);
 
+  // Keep overlay fade + body scroll lock independent of the panel mount.
+  // Closing used to unmount the panel first, skip cleanup, and leave a black film.
   useEffect(() => {
     const overlay = overlayRef.current;
-    const panel = panelRef.current;
-    if (!overlay || !panel) return;
+    if (!overlay) return;
 
     if (active) {
       document.body.classList.add("modal-open");
-      gsap.set(overlay, { pointerEvents: "auto" });
+      gsap.killTweensOf(overlay);
+      gsap.set(overlay, { pointerEvents: "auto", opacity: 0 });
       gsap.to(overlay, { opacity: 1, duration: 0.28, ease: "power2.out" });
-      gsap.fromTo(
-        panel,
-        { y: 48, scale: 0.9, rotate: -1.2, opacity: 0 },
-        { y: 0, scale: 1, rotate: 0, opacity: 1, duration: 0.42, ease: "back.out(1.4)" }
-      );
+
+      const panel = panelRef.current;
+      if (panel) {
+        gsap.killTweensOf(panel);
+        gsap.fromTo(
+          panel,
+          { y: 48, scale: 0.92, rotate: -1.2, opacity: 0 },
+          {
+            y: 0,
+            scale: 1,
+            rotate: 0,
+            opacity: 1,
+            duration: 0.42,
+            ease: "back.out(1.4)",
+          }
+        );
+      }
     } else {
       document.body.classList.remove("modal-open");
+      gsap.killTweensOf(overlay);
       gsap.to(overlay, {
         opacity: 0,
         duration: 0.22,
         ease: "power2.in",
         onComplete: () => {
           if (overlayRef.current) {
-            gsap.set(overlayRef.current, { pointerEvents: "none" });
+            gsap.set(overlayRef.current, {
+              pointerEvents: "none",
+              opacity: 0,
+            });
           }
         },
       });
     }
+
+    return () => {
+      document.body.classList.remove("modal-open");
+    };
   }, [active]);
 
   useEffect(() => {
@@ -68,6 +90,11 @@ export default function PosterWall() {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
+
+  function closeModal() {
+    document.body.classList.remove("modal-open");
+    setActive(null);
+  }
 
   function handleBooking(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -175,11 +202,17 @@ export default function PosterWall() {
               aria-label={`Open poster for ${bit.title}`}
             >
               <span className="poster__pin" aria-hidden="true" />
-              <img
-                className="poster__img"
-                src={`${bit.cover}?v=2`}
-                alt={`${bit.title} poster`}
-              />
+              <span className="poster__frame">
+                <img
+                  className="poster__img"
+                  src={`${bit.cover}?v=3`}
+                  alt={`${bit.title} poster`}
+                />
+              </span>
+              <span className="poster__meta">
+                <span className="poster__bit-label">{bit.subtitle}</span>
+                <span className="poster__bit-title">{bit.title}</span>
+              </span>
               <span className="poster__glow" aria-hidden="true" />
               <span className="poster__hint">Open bit {index + 1}</span>
             </button>
@@ -345,7 +378,7 @@ export default function PosterWall() {
         className={`overlay${active ? " is-open" : ""}`}
         ref={overlayRef}
         onClick={(e) => {
-          if (e.target === overlayRef.current) setActive(null);
+          if (e.target === overlayRef.current) closeModal();
         }}
         aria-hidden={!active}
       >
@@ -356,29 +389,39 @@ export default function PosterWall() {
             role="dialog"
             aria-modal="true"
             aria-label={`${active.title} poster`}
+            onClick={(e) => e.stopPropagation()}
           >
             <div className="poster-panel__media">
-              <img src={`${active.cover}?v=2`} alt="" />
+              <img
+                src={`${active.cover}?v=3`}
+                alt=""
+                style={{ objectPosition: "center 12%" }}
+              />
             </div>
             <div className="poster-panel__body">
               <button
                 type="button"
                 className="poster-panel__close"
-                onClick={() => setActive(null)}
+                onClick={closeModal}
                 aria-label="Close"
               >
                 ×
               </button>
               <p className="poster-panel__kicker">{active.subtitle}</p>
               <h3 className="poster-panel__title">{active.title}</h3>
-              <p>{active.note}</p>
-              <iframe
-                className="embed-frame"
-                title={`${active.title} Instagram reel`}
-                src={`https://www.instagram.com/p/${active.shortcode}/embed`}
-                loading="lazy"
-                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-              />
+              <p className="poster-panel__note">{active.note}</p>
+              <a
+                className="reel-card"
+                href={active.instagramUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <img src={`${active.cover}?v=3`} alt="" />
+                <span className="reel-card__play" aria-hidden="true">
+                  ▶
+                </span>
+                <span className="reel-card__label">Watch this reel</span>
+              </a>
               <div className="poster-panel__actions">
                 <a
                   className="btn btn--hot"
@@ -399,7 +442,7 @@ export default function PosterWall() {
                 <a
                   className="btn btn--ghost"
                   href="#book"
-                  onClick={() => setActive(null)}
+                  onClick={closeModal}
                 >
                   Book Jimmy
                 </a>

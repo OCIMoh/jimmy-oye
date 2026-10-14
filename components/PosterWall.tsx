@@ -4,12 +4,13 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import bitsData from "@/data/bits.json";
+import WallCarousel from "@/components/WallCarousel";
 
 gsap.registerPlugin(ScrollTrigger);
 
 type Bit = (typeof bitsData.bits)[number];
 
-const CACHE_BUST = "v9-immersive-showroom";
+const CACHE_BUST = "v10-wall-carousel";
 
 export default function PosterWall() {
   const [active, setActive] = useState<Bit | null>(null);
@@ -17,7 +18,6 @@ export default function PosterWall() {
   const [introDone, setIntroDone] = useState(false);
   const overlayRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
-  const wallRef = useRef<HTMLDivElement>(null);
   const wallSceneRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLElement>(null);
   const floatRef = useRef<HTMLDivElement>(null);
@@ -138,36 +138,12 @@ export default function PosterWall() {
   }, [introDone]);
 
   useEffect(() => {
-    const wall = wallRef.current;
     const scene = wallSceneRef.current;
-    if (!wall || !scene) return;
+    if (!scene) return;
 
-    const cards = wall.querySelectorAll(".poster");
     const ctx = gsap.context(() => {
-      gsap.fromTo(
-        cards,
-        { y: 70, opacity: 0, scale: 0.92 },
-        {
-          y: 0,
-          opacity: 1,
-          scale: 1,
-          duration: 0.7,
-          stagger: {
-            each: 0.05,
-            from: "random",
-          },
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: wall,
-            start: "top 82%",
-            once: true,
-          },
-          clearProps: "transform",
-        }
-      );
-
       gsap.to(scene, {
-        y: -40,
+        y: -28,
         ease: "none",
         scrollTrigger: {
           trigger: scene,
@@ -178,7 +154,7 @@ export default function PosterWall() {
       });
 
       gsap.to(".wall-depth", {
-        y: 50,
+        y: 40,
         ease: "none",
         scrollTrigger: {
           trigger: scene,
@@ -228,33 +204,6 @@ export default function PosterWall() {
         const dy = (y - 0.5) * depth * 0.7;
         card.style.setProperty("--px", `${dx}px`);
         card.style.setProperty("--py", `${dy}px`);
-      });
-
-      const posters = wallRef.current?.querySelectorAll(
-        ".poster"
-      ) as NodeListOf<HTMLElement> | undefined;
-      posters?.forEach((poster) => {
-        const rect = poster.getBoundingClientRect();
-        const cx = rect.left + rect.width / 2;
-        const cy = rect.top + rect.height / 2;
-        const dx = (e.clientX - cx) / rect.width;
-        const dy = (e.clientY - cy) / rect.height;
-        const near =
-          Math.abs(dx) < 1.4 &&
-          Math.abs(dy) < 1.4 &&
-          rect.bottom > 0 &&
-          rect.top < window.innerHeight;
-        if (near) {
-          const rx = Math.max(-8, Math.min(8, dy * -6));
-          const ry = Math.max(-10, Math.min(10, dx * 8));
-          poster.style.setProperty("--rx", `${rx}deg`);
-          poster.style.setProperty("--ry", `${ry}deg`);
-          poster.style.setProperty("--lift", near ? "1" : "0");
-        } else {
-          poster.style.setProperty("--rx", "0deg");
-          poster.style.setProperty("--ry", "0deg");
-          poster.style.setProperty("--lift", "0");
-        }
       });
     };
 
@@ -434,10 +383,12 @@ export default function PosterWall() {
               </span>
             ))}
           </h1>
-          <p className="hero__line">Walk up to the wall. Pull a bit. Feel the room.</p>
+          <p className="hero__line">
+            Walk the carousel wall. Pull a bit. Feel the room.
+          </p>
           <div className="hero__actions">
             <a className="btn btn--lemon" href="#bits">
-              Enter the wall
+              Spin the wall
             </a>
             <a
               className="btn btn--ink"
@@ -465,63 +416,23 @@ export default function PosterWall() {
         <div className="wall-paper" aria-hidden="true" />
         <div className="wall-depth" aria-hidden="true" />
         <div className="section__head">
-          <p className="section__kicker">The wall</p>
-          <h2 className="section__title">Pull a poster. Hear the bit.</h2>
+          <p className="section__kicker">The wall carousel</p>
+          <h2 className="section__title">Posters come and go.</h2>
           <p className="section__text">
-            Twenty bits pinned like a living comedy wall. Move closer, tilt a
-            poster with your finger or mouse, then pull one into your hands.
+            The wall now moves like a show reel. One set of posters leaves, the
+            next set walks in. Swipe, tap the arrows, or let it roll — then pull
+            any poster open.
           </p>
         </div>
         <div className="wall-scene" ref={wallSceneRef}>
-          <div className="poster-wall poster-wall--showroom" ref={wallRef}>
-            {bitsData.bits.map((bit, index) => (
-              <button
-                key={bit.id}
-                type="button"
-                className={`poster poster--size-${(index % 4) + 1} poster--tilt-${(index % 5) + 1}`}
-                style={{ ["--poster-accent" as string]: bit.accent }}
-                onClick={() => setActive(bit)}
-                onPointerDown={(e) => {
-                  gsap.to(e.currentTarget, {
-                    scale: 0.95,
-                    duration: 0.12,
-                    ease: "power2.out",
-                  });
-                }}
-                onPointerUp={(e) => {
-                  gsap.to(e.currentTarget, {
-                    scale: 1,
-                    duration: 0.22,
-                    ease: "power2.out",
-                  });
-                }}
-                onPointerLeave={(e) => {
-                  gsap.to(e.currentTarget, {
-                    scale: 1,
-                    duration: 0.22,
-                    ease: "power2.out",
-                  });
-                }}
-                aria-label={`Open poster for ${bit.title}`}
-              >
-                <span className="poster__pin" aria-hidden="true" />
-                <span className="poster__tape" aria-hidden="true" />
-                <span className="poster__frame">
-                  <img
-                    className="poster__img"
-                    src={`${bit.cover}?${CACHE_BUST}`}
-                    alt=""
-                  />
-                  <span className="poster__title-strip">
-                    <span className="poster__cat">{bit.subtitle}</span>
-                    <span className="poster__name">{bit.title}</span>
-                  </span>
-                </span>
-                <span className="poster__shadow" aria-hidden="true" />
-                <span className="poster__hint">Pull</span>
-              </button>
-            ))}
-          </div>
+          <WallCarousel
+            bits={bitsData.bits}
+            cacheBust={CACHE_BUST}
+            onOpen={(bit) => {
+              const full = bitsData.bits.find((b) => b.id === bit.id);
+              if (full) setActive(full);
+            }}
+          />
         </div>
       </section>
 

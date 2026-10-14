@@ -6,10 +6,20 @@
   "bookingHandle": "@dhruvbakshiwho",
   "bookingUrl": "https://www.instagram.com/dhruvbakshiwho/",
   "about": [
-    "Jasmeet Singh, better known as Jimmy Oye, is a stand-up comedian out of Chandigarh\u2013Mohali. His bits bounce between hostel life, Punjabi English chaos, city tours, and club-night crowd energy.",
+    "Jasmeet Singh, better known as Jimmy Oye, is a stand-up comedian out of Chandigarh–Mohali. His bits bounce between hostel life, Punjabi English chaos, city tours, and club-night crowd energy.",
     "He plays rooms across North India and keeps the jokes close to real life. For show queries, reach his booking contact."
   ],
   "bits": [
+    {
+      "id": "sleeping-naked",
+      "title": "Sleeping Naked",
+      "subtitle": "Viral Bit",
+      "note": "Jimmy’s biggest clip by a mile — 9.5 million views and still packing a punch.",
+      "instagramUrl": "https://www.instagram.com/p/Cy8Capvvxlj/",
+      "shortcode": "Cy8Capvvxlj",
+      "cover": "/posters/sleeping-naked.jpg",
+      "accent": "#FF2D6A"
+    },
     {
       "id": "arts-students",
       "title": "Arts Students",
@@ -18,56 +28,46 @@
       "instagramUrl": "https://www.instagram.com/p/C4dF_nOvtmG/",
       "shortcode": "C4dF_nOvtmG",
       "cover": "/posters/arts-students.jpg",
-      "accent": "#FF2D6A"
+      "accent": "#F4E04D"
+    },
+    {
+      "id": "unhealthy-trend",
+      "title": "Unhealthy Trend",
+      "subtitle": "Health Bit",
+      "note": "The most un-healthy take on the healthy trend — sharp timing, huge reach.",
+      "instagramUrl": "https://www.instagram.com/p/CyKkLH5ojOV/",
+      "shortcode": "CyKkLH5ojOV",
+      "cover": "/posters/unhealthy-trend.jpg",
+      "accent": "#00D4C8"
     },
     {
       "id": "bakri-ka-doodh",
       "title": "Bakri Ka Doodh",
       "subtitle": "Hostel Life",
-      "note": "A hostel bit that stuck \u2014 weird, warm, and very Jimmy.",
+      "note": "A hostel bit that stuck — weird, warm, and very Jimmy.",
       "instagramUrl": "https://www.instagram.com/p/C4UZmkjvJ65/",
       "shortcode": "C4UZmkjvJ65",
       "cover": "/posters/bakri-ka-doodh.jpg",
-      "accent": "#F4E04D"
-    },
-    {
-      "id": "panjabis-english",
-      "title": "Panjabis & English",
-      "subtitle": "Language Chaos",
-      "note": "When Punjabi energy meets English polish \u2014 timing does the rest.",
-      "instagramUrl": "https://www.instagram.com/p/DdDHXKWhEqo/",
-      "shortcode": "DdDHXKWhEqo",
-      "cover": "/posters/panjabis-english.jpg",
-      "accent": "#00D4C8"
-    },
-    {
-      "id": "bangalore-is-fun",
-      "title": "Bangalore Is Fun",
-      "subtitle": "City Tour",
-      "note": "Tour-city observations with crowd-ready punch.",
-      "instagramUrl": "https://www.instagram.com/p/Dc6TN-sBmDN/",
-      "shortcode": "Dc6TN-sBmDN",
-      "cover": "/posters/bangalore-is-fun.jpg",
       "accent": "#FF6B2C"
     },
     {
-      "id": "mohali-momos",
-      "title": "Mohali Momos",
-      "subtitle": "Home Ground",
-      "note": "Local flavor from Mohali \u2014 small detail, big laugh.",
-      "instagramUrl": "https://www.instagram.com/p/DHkq6x-BsXP/",
-      "shortcode": "DHkq6x-BsXP",
-      "cover": "/posters/mohali-momos.jpg",
+      "id": "motivational-speaker",
+      "title": "Motivational Speaker",
+      "subtitle": "Stage Bit",
+      "note": "A crowd-favorite stage bit with serious heat — nearly two million views.",
+      "instagramUrl": "https://www.instagram.com/p/C4HxBYOPyBA/",
+      "shortcode": "C4HxBYOPyBA",
+      "cover": "/posters/motivational-speaker.jpg",
       "accent": "#7CFF6B"
     },
     {
-      "id": "patiala-kaand",
-      "title": "Patiala Kaand",
-      "subtitle": "Story Bit",
-      "note": "A Patiala story told the Jimmy way \u2014 sharp and close to home.",
-      "instagramUrl": "https://www.instagram.com/p/DHtFTuGy2qC/",
-      "shortcode": "DHtFTuGy2qC",
-      "cover": "/posters/patiala-kaand.jpg",
+      "id": "girls-are-complex",
+      "title": "Girls Are Complex",
+      "subtitle": "Relationship Bit",
+      "note": "Relationship chaos told Jimmy’s way — clean setup, loud payoff.",
+      "instagramUrl": "https://www.instagram.com/p/CxhX1FBvi49/",
+      "shortcode": "CxhX1FBvi49",
+      "cover": "/posters/girls-are-complex.jpg",
       "accent": "#B8A0FF"
     }
   ]

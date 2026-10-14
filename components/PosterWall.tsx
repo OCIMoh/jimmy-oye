@@ -9,7 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 type Bit = (typeof bitsData.bits)[number];
 
-const CACHE_BUST = "v5-immersive";
+const CACHE_BUST = "v6-asset-swap";
 
 export default function PosterWall() {
   const [active, setActive] = useState<Bit | null>(null);

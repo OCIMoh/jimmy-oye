@@ -2,9 +2,14 @@
 
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import bitsData from "@/data/bits.json";
 
+gsap.registerPlugin(ScrollTrigger);
+
 type Bit = (typeof bitsData.bits)[number];
+
+const CACHE_BUST = "v5-immersive";
 
 export default function PosterWall() {
   const [active, setActive] = useState<Bit | null>(null);
@@ -12,24 +17,100 @@ export default function PosterWall() {
   const overlayRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const wallRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLElement>(null);
+  const floatRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const hero = heroRef.current;
+    if (!hero) return;
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        ".hero__title, .hero__line, .hero__actions, .hero__eyebrow",
+        { y: 40, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.7,
+          stagger: 0.1,
+          ease: "power3.out",
+          delay: 0.1,
+        }
+      );
+
+      const floats = floatRef.current?.querySelectorAll(".hero-float__card");
+      if (floats?.length) {
+        gsap.fromTo(
+          floats,
+          { y: 60, opacity: 0, rotate: -8 },
+          {
+            y: 0,
+            opacity: 1,
+            rotate: (i) => (i % 2 === 0 ? -6 : 5),
+            duration: 0.85,
+            stagger: 0.12,
+            ease: "power3.out",
+            delay: 0.25,
+          }
+        );
+
+        floats.forEach((card, i) => {
+          gsap.to(card, {
+            y: i % 2 === 0 ? -18 : 14,
+            duration: 3.2 + i * 0.35,
+            ease: "sine.inOut",
+            yoyo: true,
+            repeat: -1,
+          });
+        });
+      }
+    }, hero);
+
+    return () => ctx.revert();
+  }, []);
 
   useEffect(() => {
     const wall = wallRef.current;
     if (!wall) return;
+
     const cards = wall.querySelectorAll(".poster");
-    gsap.fromTo(
-      cards,
-      { y: 36, opacity: 0, rotate: -2 },
-      {
-        y: 0,
-        opacity: 1,
-        rotate: 0,
-        duration: 0.55,
-        stagger: 0.08,
-        ease: "power3.out",
-        clearProps: "transform",
-      }
-    );
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        cards,
+        { y: 48, opacity: 0, scale: 0.96 },
+        {
+          y: 0,
+          opacity: 1,
+          scale: 1,
+          duration: 0.65,
+          stagger: 0.09,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: wall,
+            start: "top 78%",
+            once: true,
+          },
+          clearProps: "transform",
+        }
+      );
+
+      gsap.fromTo(
+        wall,
+        { y: 24 },
+        {
+          y: -12,
+          ease: "none",
+          scrollTrigger: {
+            trigger: wall,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 0.9,
+          },
+        }
+      );
+    }, wall);
+
+    return () => ctx.revert();
   }, []);
 
   useEffect(() => {
@@ -40,21 +121,21 @@ export default function PosterWall() {
       document.body.classList.add("modal-open");
       gsap.killTweensOf(overlay);
       gsap.set(overlay, { pointerEvents: "auto", opacity: 0 });
-      gsap.to(overlay, { opacity: 1, duration: 0.28, ease: "power2.out" });
+      gsap.to(overlay, { opacity: 1, duration: 0.3, ease: "power2.out" });
 
       const panel = panelRef.current;
       if (panel) {
         gsap.killTweensOf(panel);
         gsap.fromTo(
           panel,
-          { y: 48, scale: 0.92, rotate: -1.2, opacity: 0 },
+          { y: 64, scale: 0.88, rotate: -2.4, opacity: 0 },
           {
             y: 0,
             scale: 1,
             rotate: 0,
             opacity: 1,
-            duration: 0.42,
-            ease: "back.out(1.4)",
+            duration: 0.48,
+            ease: "back.out(1.5)",
           }
         );
       }
@@ -123,11 +204,14 @@ export default function PosterWall() {
     setFormSent(true);
   }
 
+  const floatBits = bitsData.bits.slice(0, 4);
+
   return (
     <>
       <nav className="site-nav">
         <a className="site-nav__brand" href="#top">
-          Jimmy Oye
+          <span className="site-nav__mark">JO</span>
+          <span>Jimmy Oye</span>
         </a>
         <div className="site-nav__links">
           <a href="#bits">Bits</a>
@@ -140,19 +224,30 @@ export default function PosterWall() {
         </div>
       </nav>
 
-      <header className="hero" id="top">
-        <div className="hero__stage" aria-hidden="true" />
-        <div className="hero__noise" aria-hidden="true" />
+      <header className="hero" id="top" ref={heroRef}>
+        <div className="hero__paper" aria-hidden="true" />
+        <div className="hero__glow" aria-hidden="true" />
+        <div className="hero__floats" ref={floatRef} aria-hidden="true">
+          {floatBits.map((bit, i) => (
+            <div
+              key={bit.id}
+              className={`hero-float__card hero-float__card--${i + 1}`}
+              style={{ ["--poster-accent" as string]: bit.accent }}
+            >
+              <img src={`${bit.cover}?${CACHE_BUST}`} alt="" />
+            </div>
+          ))}
+        </div>
         <div className="hero__content">
-          <span className="hero__eyebrow">Bit Poster Wall · Preview</span>
+          <span className="hero__eyebrow">Immersive Poster Wall</span>
           <h1 className="hero__title">Jimmy Oye</h1>
-          <p className="hero__line">{bitsData.tagline}</p>
+          <p className="hero__line">Pick a bit. Feel the room.</p>
           <div className="hero__actions">
             <a className="btn btn--lemon" href="#bits">
               See the bits
             </a>
             <a
-              className="btn btn--hot"
+              className="btn btn--ink"
               href={bitsData.ticketsUrl}
               target="_blank"
               rel="noreferrer"
@@ -167,27 +262,27 @@ export default function PosterWall() {
         </a>
       </header>
 
-      <section className="section" id="bits">
+      <section className="section section--wall" id="bits">
+        <div className="wall-paper" aria-hidden="true" />
         <div className="section__head">
           <p className="section__kicker">The wall</p>
           <h2 className="section__title">Six posters. Six bits.</h2>
           <p className="section__text">
-            Tap a poster to open the bit, then jump to tickets or booking.
-            This is a tight edit of Jimmy’s strongest stage moments — not his
-            whole Instagram feed.
+            Walk up to the wall, pull a poster, feel the bit, then grab tickets
+            or send a booking enquire.
           </p>
         </div>
         <div className="poster-wall" ref={wallRef}>
-          {bitsData.bits.map((bit) => (
+          {bitsData.bits.map((bit, index) => (
             <button
               key={bit.id}
               type="button"
-              className="poster"
+              className={`poster poster--tilt-${(index % 3) + 1}`}
               style={{ ["--poster-accent" as string]: bit.accent }}
               onClick={() => setActive(bit)}
               onPointerDown={(e) => {
                 gsap.to(e.currentTarget, {
-                  scale: 0.97,
+                  scale: 0.96,
                   duration: 0.12,
                   ease: "power2.out",
                 });
@@ -195,34 +290,29 @@ export default function PosterWall() {
               onPointerUp={(e) => {
                 gsap.to(e.currentTarget, {
                   scale: 1,
-                  duration: 0.18,
+                  duration: 0.2,
                   ease: "power2.out",
                 });
               }}
               onPointerLeave={(e) => {
                 gsap.to(e.currentTarget, {
                   scale: 1,
-                  duration: 0.18,
+                  duration: 0.2,
                   ease: "power2.out",
                 });
               }}
               aria-label={`Open poster for ${bit.title}`}
             >
               <span className="poster__pin" aria-hidden="true" />
-              <span className="poster__band">Jimmy Oye · Bit Poster</span>
-              <span className="poster__photo">
+              <span className="poster__frame">
                 <img
                   className="poster__img"
-                  src={`${bit.cover}?v=4`}
+                  src={`${bit.cover}?${CACHE_BUST}`}
                   alt=""
                 />
               </span>
-              <span className="poster__meta">
-                <span className="poster__bit-label">{bit.subtitle}</span>
-                <span className="poster__bit-title">{bit.title}</span>
-              </span>
-              <span className="poster__glow" aria-hidden="true" />
-              <span className="poster__hint">Open</span>
+              <span className="poster__shadow" aria-hidden="true" />
+              <span className="poster__hint">Pull</span>
             </button>
           ))}
         </div>
@@ -376,7 +466,7 @@ export default function PosterWall() {
       </section>
 
       <footer className="site-footer">
-        <span>Jimmy Oye · Bit Poster Wall preview</span>
+        <span>Jimmy Oye · Bit Poster Wall</span>
         <a href={bitsData.instagram} target="_blank" rel="noreferrer">
           @jimmy_oye
         </a>
@@ -399,20 +489,23 @@ export default function PosterWall() {
             aria-label={`${active.title} poster`}
             onClick={(e) => e.stopPropagation()}
           >
-            <a
+            <div
               className="poster-panel__media"
-              href={active.instagramUrl}
-              target="_blank"
-              rel="noreferrer"
               style={{ ["--poster-accent" as string]: active.accent }}
             >
-              <span className="poster-panel__band">Jimmy Oye · Bit Poster</span>
-              <img src={`${active.cover}?v=4`} alt="" />
-              <span className="poster-panel__play" aria-hidden="true">
-                ▶
-              </span>
-              <span className="poster-panel__watch-label">Watch this reel</span>
-            </a>
+              <img src={`${active.cover}?${CACHE_BUST}`} alt="" />
+              <a
+                className="watch-bit"
+                href={active.instagramUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <span className="watch-bit__icon" aria-hidden="true">
+                  ▶
+                </span>
+                <span className="watch-bit__label">Watch bit</span>
+              </a>
+            </div>
             <div className="poster-panel__body">
               <button
                 type="button"

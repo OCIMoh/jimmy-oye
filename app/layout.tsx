@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Jimmy Oye — Bit Poster Wall",
+  title: "Jimmy Oye — Immersive Bit Poster Wall",
   description:
-    "Bright graphic comedian site for Jimmy Oye. Six signature bits as posters. Watch the clip, get tickets, or book a show.",
+    "Pick a bit. Feel the room. Jimmy Oye’s signature bits as a living poster wall — watch, get tickets, or book a show.",
 };
 
 export default function RootLayout({

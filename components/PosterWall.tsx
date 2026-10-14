@@ -9,32 +9,99 @@ gsap.registerPlugin(ScrollTrigger);
 
 type Bit = (typeof bitsData.bits)[number];
 
-const CACHE_BUST = "v8-twenty-posters";
+const CACHE_BUST = "v9-immersive-showroom";
 
 export default function PosterWall() {
   const [active, setActive] = useState<Bit | null>(null);
   const [formSent, setFormSent] = useState(false);
+  const [introDone, setIntroDone] = useState(false);
   const overlayRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const wallRef = useRef<HTMLDivElement>(null);
+  const wallSceneRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLElement>(null);
   const floatRef = useRef<HTMLDivElement>(null);
+  const introRef = useRef<HTMLDivElement>(null);
+  const spotlightRef = useRef<HTMLDivElement>(null);
+  const pointer = useRef({ x: 0.5, y: 0.5 });
 
   useEffect(() => {
+    const intro = introRef.current;
+    if (!intro) {
+      setIntroDone(true);
+      return;
+    }
+
+    const reduce =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (reduce) {
+      gsap.set(intro, { display: "none" });
+      setIntroDone(true);
+      return;
+    }
+
+    const tl = gsap.timeline({
+      onComplete: () => {
+        gsap.set(intro, { display: "none" });
+        setIntroDone(true);
+      },
+    });
+
+    tl.fromTo(
+      ".curtain-intro__stamp",
+      { scale: 1.4, opacity: 0, rotate: -6 },
+      { scale: 1, opacity: 1, rotate: 0, duration: 0.55, ease: "back.out(1.7)" }
+    )
+      .fromTo(
+        ".curtain-intro__line",
+        { y: 28, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" },
+        "-=0.15"
+      )
+      .to(".curtain-intro__stamp", {
+        scale: 1.08,
+        duration: 0.18,
+        yoyo: true,
+        repeat: 1,
+        ease: "power2.inOut",
+      })
+      .to(
+        intro,
+        {
+          clipPath: "inset(0 0 100% 0)",
+          duration: 0.85,
+          ease: "power3.inOut",
+        },
+        "+=0.35"
+      )
+      .to(
+        ".curtain-intro__glow",
+        { opacity: 0, duration: 0.4 },
+        "<"
+      );
+
+    return () => {
+      tl.kill();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!introDone) return;
     const hero = heroRef.current;
     if (!hero) return;
 
     const ctx = gsap.context(() => {
       gsap.fromTo(
-        ".hero__title, .hero__line, .hero__actions, .hero__eyebrow",
-        { y: 40, opacity: 0 },
+        ".hero__eyebrow, .hero__title .char, .hero__line, .hero__actions",
+        { y: 48, opacity: 0 },
         {
           y: 0,
           opacity: 1,
-          duration: 0.7,
-          stagger: 0.1,
+          duration: 0.75,
+          stagger: 0.04,
           ease: "power3.out",
-          delay: 0.1,
         }
       );
 
@@ -42,22 +109,23 @@ export default function PosterWall() {
       if (floats?.length) {
         gsap.fromTo(
           floats,
-          { y: 60, opacity: 0, rotate: -8 },
+          { y: 80, opacity: 0, rotate: -12, scale: 0.9 },
           {
             y: 0,
             opacity: 1,
             rotate: (i) => (i % 2 === 0 ? -6 : 5),
-            duration: 0.85,
-            stagger: 0.12,
+            scale: 1,
+            duration: 0.95,
+            stagger: 0.08,
             ease: "power3.out",
-            delay: 0.25,
+            delay: 0.15,
           }
         );
 
         floats.forEach((card, i) => {
           gsap.to(card, {
-            y: i % 2 === 0 ? -18 : 14,
-            duration: 3.2 + i * 0.35,
+            y: i % 2 === 0 ? -22 : 16,
+            duration: 3.4 + i * 0.28,
             ease: "sine.inOut",
             yoyo: true,
             repeat: -1,
@@ -67,50 +135,131 @@ export default function PosterWall() {
     }, hero);
 
     return () => ctx.revert();
-  }, []);
+  }, [introDone]);
 
   useEffect(() => {
     const wall = wallRef.current;
-    if (!wall) return;
+    const scene = wallSceneRef.current;
+    if (!wall || !scene) return;
 
     const cards = wall.querySelectorAll(".poster");
     const ctx = gsap.context(() => {
       gsap.fromTo(
         cards,
-        { y: 48, opacity: 0, scale: 0.96 },
+        { y: 70, opacity: 0, scale: 0.92 },
         {
           y: 0,
           opacity: 1,
           scale: 1,
-          duration: 0.65,
-          stagger: 0.09,
+          duration: 0.7,
+          stagger: {
+            each: 0.05,
+            from: "random",
+          },
           ease: "power3.out",
           scrollTrigger: {
             trigger: wall,
-            start: "top 78%",
+            start: "top 82%",
             once: true,
           },
           clearProps: "transform",
         }
       );
 
+      gsap.to(scene, {
+        y: -40,
+        ease: "none",
+        scrollTrigger: {
+          trigger: scene,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1.1,
+        },
+      });
+
+      gsap.to(".wall-depth", {
+        y: 50,
+        ease: "none",
+        scrollTrigger: {
+          trigger: scene,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1.4,
+        },
+      });
+
       gsap.fromTo(
-        wall,
-        { y: 24 },
+        ".paper-tear",
+        { scaleX: 0 },
         {
-          y: -12,
+          scaleX: 1,
           ease: "none",
           scrollTrigger: {
-            trigger: wall,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 0.9,
+            trigger: ".section--wall",
+            start: "top 90%",
+            end: "top 40%",
+            scrub: true,
           },
         }
       );
-    }, wall);
+    }, scene);
 
     return () => ctx.revert();
+  }, []);
+
+  useEffect(() => {
+    const onMove = (e: PointerEvent) => {
+      const x = e.clientX / window.innerWidth;
+      const y = e.clientY / window.innerHeight;
+      pointer.current = { x, y };
+
+      const spot = spotlightRef.current;
+      if (spot) {
+        spot.style.setProperty("--sx", `${e.clientX}px`);
+        spot.style.setProperty("--sy", `${e.clientY}px`);
+      }
+
+      const floats = floatRef.current?.querySelectorAll(
+        ".hero-float__card"
+      ) as NodeListOf<HTMLElement> | undefined;
+      floats?.forEach((card, i) => {
+        const depth = 8 + (i % 4) * 4;
+        const dx = (x - 0.5) * depth;
+        const dy = (y - 0.5) * depth * 0.7;
+        card.style.setProperty("--px", `${dx}px`);
+        card.style.setProperty("--py", `${dy}px`);
+      });
+
+      const posters = wallRef.current?.querySelectorAll(
+        ".poster"
+      ) as NodeListOf<HTMLElement> | undefined;
+      posters?.forEach((poster) => {
+        const rect = poster.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const dx = (e.clientX - cx) / rect.width;
+        const dy = (e.clientY - cy) / rect.height;
+        const near =
+          Math.abs(dx) < 1.4 &&
+          Math.abs(dy) < 1.4 &&
+          rect.bottom > 0 &&
+          rect.top < window.innerHeight;
+        if (near) {
+          const rx = Math.max(-8, Math.min(8, dy * -6));
+          const ry = Math.max(-10, Math.min(10, dx * 8));
+          poster.style.setProperty("--rx", `${rx}deg`);
+          poster.style.setProperty("--ry", `${ry}deg`);
+          poster.style.setProperty("--lift", near ? "1" : "0");
+        } else {
+          poster.style.setProperty("--rx", "0deg");
+          poster.style.setProperty("--ry", "0deg");
+          poster.style.setProperty("--lift", "0");
+        }
+      });
+    };
+
+    window.addEventListener("pointermove", onMove, { passive: true });
+    return () => window.removeEventListener("pointermove", onMove);
   }, []);
 
   useEffect(() => {
@@ -121,21 +270,32 @@ export default function PosterWall() {
       document.body.classList.add("modal-open");
       gsap.killTweensOf(overlay);
       gsap.set(overlay, { pointerEvents: "auto", opacity: 0 });
-      gsap.to(overlay, { opacity: 1, duration: 0.3, ease: "power2.out" });
+      gsap.to(overlay, { opacity: 1, duration: 0.32, ease: "power2.out" });
 
       const panel = panelRef.current;
       if (panel) {
         gsap.killTweensOf(panel);
         gsap.fromTo(
           panel,
-          { y: 64, scale: 0.88, rotate: -2.4, opacity: 0 },
+          { y: 90, scale: 0.82, rotate: -3.2, opacity: 0 },
           {
             y: 0,
             scale: 1,
             rotate: 0,
             opacity: 1,
-            duration: 0.48,
-            ease: "back.out(1.5)",
+            duration: 0.55,
+            ease: "back.out(1.6)",
+          }
+        );
+        gsap.fromTo(
+          ".watch-bit",
+          { scale: 0.6, opacity: 0 },
+          {
+            scale: 1,
+            opacity: 1,
+            duration: 0.45,
+            delay: 0.2,
+            ease: "back.out(2)",
           }
         );
       }
@@ -215,14 +375,25 @@ export default function PosterWall() {
           .filter(Boolean)
       : bitsData.bits.slice(0, 5)
   ) as Bit[];
-  // Extra depth on the opening: oldest five up front, plus three more high-view posters.
   const heroWallBits = [
     ...floatBits,
-    ...bitsData.bits.filter((b) => !floatBits.some((f) => f.id === b.id)).slice(0, 3),
+    ...bitsData.bits
+      .filter((b) => !floatBits.some((f) => f.id === b.id))
+      .slice(0, 3),
   ].slice(0, 8);
+
+  const titleChars = "Jimmy Oye".split("");
 
   return (
     <>
+      <div className="curtain-intro" ref={introRef} aria-hidden="true">
+        <div className="curtain-intro__glow" />
+        <div className="curtain-intro__stamp">SHOW STARTS NOW</div>
+        <p className="curtain-intro__line">Jimmy Oye · Bit Poster Wall</p>
+      </div>
+
+      <div className="spotlight" ref={spotlightRef} aria-hidden="true" />
+
       <nav className="site-nav">
         <a className="site-nav__brand" href="#top">
           <span className="site-nav__mark">JO</span>
@@ -250,16 +421,23 @@ export default function PosterWall() {
               style={{ ["--poster-accent" as string]: bit.accent }}
             >
               <img src={`${bit.cover}?${CACHE_BUST}`} alt="" />
+              <span className="hero-float__tape" />
             </div>
           ))}
         </div>
         <div className="hero__content">
-          <span className="hero__eyebrow">Immersive Poster Wall</span>
-          <h1 className="hero__title">Jimmy Oye</h1>
-          <p className="hero__line">Pick a bit. Feel the room.</p>
+          <span className="hero__eyebrow">Immersive Showroom</span>
+          <h1 className="hero__title" aria-label="Jimmy Oye">
+            {titleChars.map((ch, i) => (
+              <span className="char" key={`${ch}-${i}`}>
+                {ch === " " ? "\u00A0" : ch}
+              </span>
+            ))}
+          </h1>
+          <p className="hero__line">Walk up to the wall. Pull a bit. Feel the room.</p>
           <div className="hero__actions">
             <a className="btn btn--lemon" href="#bits">
-              See the bits
+              Enter the wall
             </a>
             <a
               className="btn btn--ink"
@@ -271,66 +449,79 @@ export default function PosterWall() {
             </a>
           </div>
         </div>
-        <a className="hero__scroll" href="#bits" aria-label="Scroll to poster wall">
+        <a
+          className="hero__scroll"
+          href="#bits"
+          aria-label="Scroll to poster wall"
+        >
           <span />
-          Scroll the wall
+          Step into the wall
         </a>
       </header>
 
+      <div className="paper-tear" aria-hidden="true" />
+
       <section className="section section--wall" id="bits">
         <div className="wall-paper" aria-hidden="true" />
+        <div className="wall-depth" aria-hidden="true" />
         <div className="section__head">
           <p className="section__kicker">The wall</p>
-          <h2 className="section__title">Twenty posters. Twenty bits.</h2>
+          <h2 className="section__title">Pull a poster. Hear the bit.</h2>
           <p className="section__text">
-            Jimmy’s strongest clips by views, with the oldest five of that set
-            floating on the opening screen. Pull a poster, feel the bit, then
-            grab tickets or send a booking enquire.
+            Twenty bits pinned like a living comedy wall. Move closer, tilt a
+            poster with your finger or mouse, then pull one into your hands.
           </p>
         </div>
-        <div className="poster-wall" ref={wallRef}>
-          {bitsData.bits.map((bit, index) => (
-            <button
-              key={bit.id}
-              type="button"
-              className={`poster poster--tilt-${(index % 3) + 1}`}
-              style={{ ["--poster-accent" as string]: bit.accent }}
-              onClick={() => setActive(bit)}
-              onPointerDown={(e) => {
-                gsap.to(e.currentTarget, {
-                  scale: 0.96,
-                  duration: 0.12,
-                  ease: "power2.out",
-                });
-              }}
-              onPointerUp={(e) => {
-                gsap.to(e.currentTarget, {
-                  scale: 1,
-                  duration: 0.2,
-                  ease: "power2.out",
-                });
-              }}
-              onPointerLeave={(e) => {
-                gsap.to(e.currentTarget, {
-                  scale: 1,
-                  duration: 0.2,
-                  ease: "power2.out",
-                });
-              }}
-              aria-label={`Open poster for ${bit.title}`}
-            >
-              <span className="poster__pin" aria-hidden="true" />
-              <span className="poster__frame">
-                <img
-                  className="poster__img"
-                  src={`${bit.cover}?${CACHE_BUST}`}
-                  alt=""
-                />
-              </span>
-              <span className="poster__shadow" aria-hidden="true" />
-              <span className="poster__hint">Pull</span>
-            </button>
-          ))}
+        <div className="wall-scene" ref={wallSceneRef}>
+          <div className="poster-wall poster-wall--showroom" ref={wallRef}>
+            {bitsData.bits.map((bit, index) => (
+              <button
+                key={bit.id}
+                type="button"
+                className={`poster poster--size-${(index % 4) + 1} poster--tilt-${(index % 5) + 1}`}
+                style={{ ["--poster-accent" as string]: bit.accent }}
+                onClick={() => setActive(bit)}
+                onPointerDown={(e) => {
+                  gsap.to(e.currentTarget, {
+                    scale: 0.95,
+                    duration: 0.12,
+                    ease: "power2.out",
+                  });
+                }}
+                onPointerUp={(e) => {
+                  gsap.to(e.currentTarget, {
+                    scale: 1,
+                    duration: 0.22,
+                    ease: "power2.out",
+                  });
+                }}
+                onPointerLeave={(e) => {
+                  gsap.to(e.currentTarget, {
+                    scale: 1,
+                    duration: 0.22,
+                    ease: "power2.out",
+                  });
+                }}
+                aria-label={`Open poster for ${bit.title}`}
+              >
+                <span className="poster__pin" aria-hidden="true" />
+                <span className="poster__tape" aria-hidden="true" />
+                <span className="poster__frame">
+                  <img
+                    className="poster__img"
+                    src={`${bit.cover}?${CACHE_BUST}`}
+                    alt=""
+                  />
+                  <span className="poster__title-strip">
+                    <span className="poster__cat">{bit.subtitle}</span>
+                    <span className="poster__name">{bit.title}</span>
+                  </span>
+                </span>
+                <span className="poster__shadow" aria-hidden="true" />
+                <span className="poster__hint">Pull</span>
+              </button>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -482,11 +673,25 @@ export default function PosterWall() {
       </section>
 
       <footer className="site-footer">
-        <span>Jimmy Oye · Bit Poster Wall</span>
+        <span>Jimmy Oye · Immersive Showroom</span>
         <a href={bitsData.instagram} target="_blank" rel="noreferrer">
           @jimmy_oye
         </a>
       </footer>
+
+      <div className="showrunner" role="navigation" aria-label="Quick actions">
+        <a
+          className="showrunner__btn showrunner__btn--tickets"
+          href={bitsData.ticketsUrl}
+          target="_blank"
+          rel="noreferrer"
+        >
+          Get tickets
+        </a>
+        <a className="showrunner__btn showrunner__btn--book" href="#book">
+          Book Jimmy
+        </a>
+      </div>
 
       <div
         className={`overlay${active ? " is-open" : ""}`}
@@ -509,13 +714,19 @@ export default function PosterWall() {
               className="poster-panel__media"
               style={{ ["--poster-accent" as string]: active.accent }}
             >
-              <img src={`${active.cover}?${CACHE_BUST}`} alt="" />
+              <img
+                className="poster-panel__img"
+                src={`${active.cover}?${CACHE_BUST}`}
+                alt=""
+              />
+              <div className="poster-panel__pulse" aria-hidden="true" />
               <a
                 className="watch-bit"
                 href={active.instagramUrl}
                 target="_blank"
                 rel="noreferrer"
               >
+                <span className="watch-bit__ring" aria-hidden="true" />
                 <span className="watch-bit__icon" aria-hidden="true">
                   ▶
                 </span>

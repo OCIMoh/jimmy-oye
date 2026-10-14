@@ -10,7 +10,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 type Bit = (typeof bitsData.bits)[number];
 
-const CACHE_BUST = "v10-wall-carousel";
+const CACHE_BUST = "v11-wall-scroll-all";
 
 export default function PosterWall() {
   const [active, setActive] = useState<Bit | null>(null);
@@ -142,22 +142,11 @@ export default function PosterWall() {
     if (!scene) return;
 
     const ctx = gsap.context(() => {
-      gsap.to(scene, {
-        y: -28,
-        ease: "none",
-        scrollTrigger: {
-          trigger: scene,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 1.1,
-        },
-      });
-
       gsap.to(".wall-depth", {
         y: 40,
         ease: "none",
         scrollTrigger: {
-          trigger: scene,
+          trigger: ".section--wall",
           start: "top bottom",
           end: "bottom top",
           scrub: 1.4,
@@ -384,11 +373,11 @@ export default function PosterWall() {
             ))}
           </h1>
           <p className="hero__line">
-            Walk the carousel wall. Pull a bit. Feel the room.
+            Scroll the full wall. Pull a bit. Feel the room.
           </p>
           <div className="hero__actions">
             <a className="btn btn--lemon" href="#bits">
-              Spin the wall
+              Walk the wall
             </a>
             <a
               className="btn btn--ink"
@@ -416,12 +405,12 @@ export default function PosterWall() {
         <div className="wall-paper" aria-hidden="true" />
         <div className="wall-depth" aria-hidden="true" />
         <div className="section__head">
-          <p className="section__kicker">The wall carousel</p>
-          <h2 className="section__title">Posters come and go.</h2>
+          <p className="section__kicker">The full wall</p>
+          <h2 className="section__title">Scroll every poster.</h2>
           <p className="section__text">
-            The wall now moves like a show reel. One set of posters leaves, the
-            next set walks in. Swipe, tap the arrows, or let it roll — then pull
-            any poster open.
+            All twenty bits sit in one long wall. Keep scrolling to walk past
+            every poster before the page continues down. Tap any one to pull it
+            open.
           </p>
         </div>
         <div className="wall-scene" ref={wallSceneRef}>

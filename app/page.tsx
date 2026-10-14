@@ -1,5 +1,10 @@
 import PosterWall from "@/components/PosterWall";
+import SmoothScroll from "@/components/SmoothScroll";
 
 export default function HomePage() {
-  return <PosterWall />;
+  return (
+    <SmoothScroll>
+      <PosterWall />
+    </SmoothScroll>
+  );
 }

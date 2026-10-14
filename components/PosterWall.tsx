@@ -5,14 +5,16 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import bitsData from "@/data/bits.json";
 import WallCarousel from "@/components/WallCarousel";
+import { useSmoothScroll } from "@/components/SmoothScroll";
 
 gsap.registerPlugin(ScrollTrigger);
 
 type Bit = (typeof bitsData.bits)[number];
 
-const CACHE_BUST = "v11-wall-scroll-all";
+const CACHE_BUST = "v16-hero-gallery-center";
 
 export default function PosterWall() {
+  const { stop: stopScroll, start: startScroll } = useSmoothScroll();
   const [active, setActive] = useState<Bit | null>(null);
   const [formSent, setFormSent] = useState(false);
   const [introDone, setIntroDone] = useState(false);
@@ -206,6 +208,7 @@ export default function PosterWall() {
 
     if (active) {
       document.body.classList.add("modal-open");
+      stopScroll();
       gsap.killTweensOf(overlay);
       gsap.set(overlay, { pointerEvents: "auto", opacity: 0 });
       gsap.to(overlay, { opacity: 1, duration: 0.32, ease: "power2.out" });
@@ -239,6 +242,7 @@ export default function PosterWall() {
       }
     } else {
       document.body.classList.remove("modal-open");
+      startScroll();
       gsap.killTweensOf(overlay);
       gsap.to(overlay, {
         opacity: 0,
@@ -252,17 +256,19 @@ export default function PosterWall() {
             });
           }
           document.body.classList.remove("modal-open");
+          startScroll();
         },
       });
     }
 
     return () => {
       document.body.classList.remove("modal-open");
+      startScroll();
       if (overlayRef.current) {
         gsap.set(overlayRef.current, { pointerEvents: "none", opacity: 0 });
       }
     };
-  }, [active]);
+  }, [active, stopScroll, startScroll]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -274,6 +280,7 @@ export default function PosterWall() {
 
   function closeModal() {
     document.body.classList.remove("modal-open");
+    startScroll();
     const overlay = overlayRef.current;
     if (overlay) {
       gsap.killTweensOf(overlay);
@@ -317,8 +324,8 @@ export default function PosterWall() {
     ...floatBits,
     ...bitsData.bits
       .filter((b) => !floatBits.some((f) => f.id === b.id))
-      .slice(0, 3),
-  ].slice(0, 8);
+      .slice(0, 10),
+  ].slice(0, 12);
 
   const titleChars = "Jimmy Oye".split("");
 

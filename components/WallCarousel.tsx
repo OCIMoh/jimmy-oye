@@ -21,67 +21,109 @@ type WallCarouselProps = {
   onOpen: (bit: CarouselBit) => void;
 };
 
+function shouldUsePinnedWall() {
+  if (typeof window === "undefined") return false;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    return false;
+  }
+  // Short / landscape phones: pin overflows the viewport — use swipe instead.
+  if (window.innerHeight < 560) return false;
+  return true;
+}
+
 export default function WallCarousel({
   bits,
   cacheBust,
   onOpen,
 }: WallCarouselProps) {
   const reduce = useReducedMotion();
-  const pinRef = useRef<HTMLDivElement>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const pin = pinRef.current;
+    const root = rootRef.current;
+    const stage = stageRef.current;
     const track = trackRef.current;
     const progress = progressRef.current;
-    if (!pin || !track) return;
+    if (!root || !stage || !track) return;
 
-    const reduceMotion =
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let ctx: gsap.Context | null = null;
+    let resizeTimer: number | undefined;
 
-    if (reduceMotion) {
-      pin.classList.add("wall-carousel--fallback");
-      return;
-    }
+    const clearPin = () => {
+      ctx?.revert();
+      ctx = null;
+      gsap.set(track, { clearProps: "transform,x" });
+      if (progress) progress.style.width = "0%";
+    };
 
-    const getTravel = () =>
-      Math.max(0, track.scrollWidth - pin.clientWidth + 48);
+    const setup = () => {
+      clearPin();
 
-    const ctx = gsap.context(() => {
-      gsap.to(track, {
-        x: () => -getTravel(),
-        ease: "none",
-        scrollTrigger: {
-          trigger: pin,
-          start: "top top",
-          end: () =>
-            `+=${Math.max(getTravel() * 1.05, window.innerHeight * 1.4)}`,
-          pin: true,
-          scrub: 0.85,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-          onUpdate: (self) => {
-            if (progress) {
-              progress.style.width = `${Math.round(self.progress * 100)}%`;
-            }
+      if (!shouldUsePinnedWall()) {
+        root.classList.add("wall-carousel--fallback");
+        return;
+      }
+
+      root.classList.remove("wall-carousel--fallback");
+
+      const getTravel = () =>
+        Math.max(0, track.scrollWidth - stage.clientWidth + 32);
+
+      ctx = gsap.context(() => {
+        gsap.to(track, {
+          x: () => -getTravel(),
+          ease: "none",
+          scrollTrigger: {
+            trigger: stage,
+            start: "top top",
+            end: () => {
+              const travel = getTravel();
+              return `+=${Math.max(travel * 1.05, window.innerHeight * 1.25)}`;
+            },
+            pin: true,
+            scrub: 0.85,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+            onUpdate: (self) => {
+              if (progress) {
+                progress.style.width = `${Math.round(self.progress * 100)}%`;
+              }
+            },
           },
-        },
-      });
-    }, pin);
+        });
+      }, root);
 
-    requestAnimationFrame(() => ScrollTrigger.refresh());
+      requestAnimationFrame(() => ScrollTrigger.refresh());
+    };
+
+    setup();
+
+    const onResize = () => {
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(() => {
+        setup();
+        ScrollTrigger.refresh();
+      }, 140);
+    };
+
+    window.addEventListener("resize", onResize);
+    window.addEventListener("orientationchange", onResize);
 
     return () => {
-      ctx.revert();
-      pin.classList.remove("wall-carousel--fallback");
+      window.clearTimeout(resizeTimer);
+      window.removeEventListener("resize", onResize);
+      window.removeEventListener("orientationchange", onResize);
+      clearPin();
+      root.classList.remove("wall-carousel--fallback");
     };
   }, [bits.length]);
 
   return (
-    <div className="wall-carousel" ref={pinRef}>
-      <div className="wall-carousel__stage">
+    <div className="wall-carousel" ref={rootRef}>
+      <div className="wall-carousel__stage" ref={stageRef}>
         <div className="wall-carousel__track" ref={trackRef}>
           {bits.map((bit, index) => (
             <motion.button
@@ -133,10 +175,7 @@ export default function WallCarousel({
           Keep scrolling to walk through every poster. After the last one, the
           page continues down.
         </p>
-        <div
-          className="wall-carousel__progress"
-          aria-hidden="true"
-        >
+        <div className="wall-carousel__progress" aria-hidden="true">
           <div className="wall-carousel__progress-bar" ref={progressRef} />
         </div>
         <p className="wall-carousel__count">{bits.length} posters on the wall</p>

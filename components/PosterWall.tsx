@@ -32,8 +32,6 @@ export default function PosterWall() {
     );
   }, []);
 
-  // Keep overlay fade + body scroll lock independent of the panel mount.
-  // Closing used to unmount the panel first, skip cleanup, and leave a black film.
   useEffect(() => {
     const overlay = overlayRef.current;
     if (!overlay) return;
@@ -74,18 +72,22 @@ export default function PosterWall() {
               opacity: 0,
             });
           }
+          document.body.classList.remove("modal-open");
         },
       });
     }
 
     return () => {
       document.body.classList.remove("modal-open");
+      if (overlayRef.current) {
+        gsap.set(overlayRef.current, { pointerEvents: "none", opacity: 0 });
+      }
     };
   }, [active]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setActive(null);
+      if (e.key === "Escape") closeModal();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -93,6 +95,11 @@ export default function PosterWall() {
 
   function closeModal() {
     document.body.classList.remove("modal-open");
+    const overlay = overlayRef.current;
+    if (overlay) {
+      gsap.killTweensOf(overlay);
+      gsap.set(overlay, { pointerEvents: "none", opacity: 0 });
+    }
     setActive(null);
   }
 
@@ -165,13 +172,13 @@ export default function PosterWall() {
           <p className="section__kicker">The wall</p>
           <h2 className="section__title">Six posters. Six bits.</h2>
           <p className="section__text">
-            Tap a poster to open the clip, then jump to tickets or booking.
+            Tap a poster to open the bit, then jump to tickets or booking.
             This is a tight edit of Jimmy’s strongest stage moments — not his
             whole Instagram feed.
           </p>
         </div>
         <div className="poster-wall" ref={wallRef}>
-          {bitsData.bits.map((bit, index) => (
+          {bitsData.bits.map((bit) => (
             <button
               key={bit.id}
               type="button"
@@ -202,11 +209,12 @@ export default function PosterWall() {
               aria-label={`Open poster for ${bit.title}`}
             >
               <span className="poster__pin" aria-hidden="true" />
-              <span className="poster__frame">
+              <span className="poster__band">Jimmy Oye · Bit Poster</span>
+              <span className="poster__photo">
                 <img
                   className="poster__img"
-                  src={`${bit.cover}?v=3`}
-                  alt={`${bit.title} poster`}
+                  src={`${bit.cover}?v=4`}
+                  alt=""
                 />
               </span>
               <span className="poster__meta">
@@ -214,7 +222,7 @@ export default function PosterWall() {
                 <span className="poster__bit-title">{bit.title}</span>
               </span>
               <span className="poster__glow" aria-hidden="true" />
-              <span className="poster__hint">Open bit {index + 1}</span>
+              <span className="poster__hint">Open</span>
             </button>
           ))}
         </div>
@@ -391,13 +399,20 @@ export default function PosterWall() {
             aria-label={`${active.title} poster`}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="poster-panel__media">
-              <img
-                src={`${active.cover}?v=3`}
-                alt=""
-                style={{ objectPosition: "center 12%" }}
-              />
-            </div>
+            <a
+              className="poster-panel__media"
+              href={active.instagramUrl}
+              target="_blank"
+              rel="noreferrer"
+              style={{ ["--poster-accent" as string]: active.accent }}
+            >
+              <span className="poster-panel__band">Jimmy Oye · Bit Poster</span>
+              <img src={`${active.cover}?v=4`} alt="" />
+              <span className="poster-panel__play" aria-hidden="true">
+                ▶
+              </span>
+              <span className="poster-panel__watch-label">Watch this reel</span>
+            </a>
             <div className="poster-panel__body">
               <button
                 type="button"
@@ -410,18 +425,6 @@ export default function PosterWall() {
               <p className="poster-panel__kicker">{active.subtitle}</p>
               <h3 className="poster-panel__title">{active.title}</h3>
               <p className="poster-panel__note">{active.note}</p>
-              <a
-                className="reel-card"
-                href={active.instagramUrl}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <img src={`${active.cover}?v=3`} alt="" />
-                <span className="reel-card__play" aria-hidden="true">
-                  ▶
-                </span>
-                <span className="reel-card__label">Watch this reel</span>
-              </a>
               <div className="poster-panel__actions">
                 <a
                   className="btn btn--hot"

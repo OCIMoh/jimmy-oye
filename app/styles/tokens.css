@@ -1,0 +1,234 @@
+/* ==========================================================================
+   DESIGN TOKENS & SYSTEM BASE (tokens.css)
+   ========================================================================== */
+@charset "UTF-8";
+
+/* ==========================================================================
+   THE RAW SETLIST MANIFESTO — AWWWARDS SHOWCASE DESIGN SYSTEM
+   Jimmy Oye: Same Shit. Different People.
+   ========================================================================== */
+
+:root {
+  --bg-pitch: #000000;
+  --bg-obsidian: #08090a;
+  --bg-card: #121316;
+  --bg-surface: #18191d;
+
+  --neon-lime: #ccff00;
+  --neon-lime-hover: #b5e600;
+  --paper-bone: #f7f5f0;
+  --paper-bone-dark: #e8e4da;
+  --paper-muted: #d0cec5;
+  --tape-silver: #a8a8a8;
+  --raw-red: #ff2d6a;
+
+  --line-subtle: rgba(255, 255, 255, 0.12);
+  --line-light: rgba(255, 255, 255, 0.06);
+
+  --font-billboard: "Anton", "Bebas Neue", sans-serif;
+  --font-handwritten: "Caveat", cursive;
+  --font-mono: "Space Mono", monospace;
+  --font-headline: "Syne", "Archivo Black", sans-serif;
+  --font-body: "Space Grotesk", "Figtree", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bg-pitch);
+  color: var(--paper-bone);
+  font-family: var(--font-body);
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background-color: var(--bg-pitch);
+  color: var(--paper-bone);
+  overflow-x: clip;
+  line-height: 1.5;
+  position: relative;
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   Atmospheric Overlays: Film Grain & Precision Custom Cursor
+   -------------------------------------------------------------------------- */
+.film-grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.28;
+}
+
+.film-grain__svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 10000;
+}
+
+.custom-cursor__dot {
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--neon-lime);
+  pointer-events: none;
+}
+
+.custom-cursor__ring {
+  position: absolute;
+  top: -18px;
+  left: -18px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(204, 255, 0, 0.6);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: width 0.2s ease, height 0.2s ease, top 0.2s ease, left 0.2s ease, border-color 0.2s ease;
+}
+
+.custom-cursor__text {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  font-weight: 700;
+  color: var(--neon-lime);
+  white-space: nowrap;
+  letter-spacing: 0.05em;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.custom-cursor--badge .custom-cursor__ring {
+  width: 72px;
+  height: 72px;
+  top: -36px;
+  left: -36px;
+  background: rgba(0, 0, 0, 0.75);
+  border-color: var(--neon-lime);
+}
+
+.custom-cursor--badge .custom-cursor__text {
+  opacity: 1;
+}
+
+.custom-cursor--pointer .custom-cursor__ring {
+  width: 44px;
+  height: 44px;
+  top: -22px;
+  left: -22px;
+  border-color: #ffffff;
+}
+
+.custom-cursor--hidden {
+  opacity: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Dynamic Theatrical Stage Spotlight Beam
+   -------------------------------------------------------------------------- */
+.manifesto-spotlight {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background: radial-gradient(
+    circle 700px at var(--spot-x, 50%) var(--spot-y, 35%),
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(204, 255, 0, 0.03) 35%,
+    transparent 70%
+  );
+  mix-blend-mode: screen;
+  transition: opacity 0.4s ease;
+}
+
+/* --- SHARED SECTION TYPOGRAPHY & PRIMITIVES --- */
+/* --------------------------------------------------------------------------
+   SHARED SECTION STYLES (Sections 3, 4, 5)
+   -------------------------------------------------------------------------- */
+.manifesto-section {
+  position: relative;
+  z-index: 10;
+  background: var(--bg-pitch);
+  padding: 6rem 2rem;
+  border-top: 1px solid var(--line-subtle);
+}
+
+.manifesto-tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--neon-lime);
+  margin-bottom: 0.65rem;
+}
+
+.manifesto-heading {
+  font-family: var(--font-billboard);
+  font-size: clamp(2.4rem, 5vw, 4.2rem);
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+  margin-bottom: 1.25rem;
+}
+
+.manifesto-lead {
+  font-size: 1.15rem;
+  line-height: 1.6;
+  color: var(--paper-bone-dark);
+  max-width: 600px;
+  margin-bottom: 1.5rem;
+}
+
+.manifesto-body {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: #a0a0a0;
+  max-width: 580px;
+  margin-bottom: 2rem;
+}
+
+
+/* Shared Lime Action Button */
+.manifesto-btn--lime {
+  background: var(--neon-lime);
+  color: #000000;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 0.9rem 1.75rem;
+  border: none;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.manifesto-btn--lime:hover {
+  background: var(--neon-lime-hover);
+  transform: translateY(-2px);
+}

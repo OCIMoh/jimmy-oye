@@ -1,90 +1,55 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
+import React from "react";
 
 interface VelocityMarqueeProps {
   text?: string;
   repeat?: number;
   direction?: 1 | -1;
   className?: string;
+  rows?: number;
 }
 
 export default function VelocityMarquee({
-  text = "SAME SHIT · DIFFERENT PEOPLE · STAND-UP COMEDY · LIVE TOUR · JIMMY OYE · ",
-  repeat = 4,
+  text = "SAME SHIT · DIFFERENT CITIES · HOSTEL TO TOUR · JIMMY OYE STAND-UP · 100+ SHOWS · ",
+  repeat = 8,
   direction = 1,
   className = "",
+  rows = 5,
 }: VelocityMarqueeProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const container = containerRef.current;
-    const track = trackRef.current;
-    if (!container || !track) return;
-
-    let xPos = 0;
-    let baseSpeed = 1.2 * direction;
-    let velocityMultiplier = 1;
-    let rafId: number;
-
-    const items = track.children;
-    const singleWidth = track.scrollWidth / 2;
-
-    const loop = () => {
-      xPos -= baseSpeed * velocityMultiplier;
-
-      // Wrap around seamlessly
-      if (direction === 1) {
-        if (xPos <= -singleWidth) {
-          xPos += singleWidth;
-        }
-      } else {
-        if (xPos >= 0) {
-          xPos -= singleWidth;
-        }
-      }
-
-      gsap.set(track, { x: xPos });
-
-      // Decay velocity multiplier back toward 1
-      velocityMultiplier += (1 - velocityMultiplier) * 0.08;
-
-      rafId = requestAnimationFrame(loop);
-    };
-
-    rafId = requestAnimationFrame(loop);
-
-    // Track scroll velocity via ScrollTrigger
-    const st = ScrollTrigger.create({
-      onUpdate: (self) => {
-        const vel = Math.abs(self.getVelocity());
-        if (vel > 50) {
-          // Accelerate proportionally with scroll velocity
-          const boost = Math.min(vel / 280, 5);
-          velocityMultiplier = 1 + boost;
-        }
-      },
-    });
-
-    return () => {
-      cancelAnimationFrame(rafId);
-      st.kill();
-    };
-  }, [direction]);
+  // Staggered speed variations for stacked rows (calm, steady ambient drift)
+  const baseDurations = [152, 180, 134, 172, 143];
 
   const repeatedText = Array.from({ length: repeat }).fill(text).join("");
 
   return (
-    <div className={`velocity-marquee ${className}`} ref={containerRef} aria-hidden="true">
-      <div className="velocity-marquee__track" ref={trackRef}>
-        <span className="velocity-marquee__chunk">{repeatedText}</span>
-        <span className="velocity-marquee__chunk">{repeatedText}</span>
-      </div>
+    <div
+      className={`velocity-marquee-block ${className}`}
+      aria-hidden="true"
+    >
+      {Array.from({ length: rows }).map((_, rowIndex) => {
+        // Alternate directions between adjacent rows to create a mesmerizing kinetic tapestry
+        const isReverse = direction === 1 ? rowIndex % 2 === 1 : rowIndex % 2 === 0;
+        const duration = baseDurations[rowIndex % baseDurations.length];
+        const animationName = isReverse ? "marquee-right" : "marquee-left";
+
+        return (
+          <div key={rowIndex} className="marquee-row">
+            <div
+              className="marquee-row__track"
+              style={{
+                animationName,
+                animationDuration: `${duration}s`,
+                animationTimingFunction: "linear",
+                animationIterationCount: "infinite",
+              }}
+            >
+              <span className="marquee-row__chunk">{repeatedText}</span>
+              <span className="marquee-row__chunk">{repeatedText}</span>
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }

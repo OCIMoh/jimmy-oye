@@ -1,0 +1,265 @@
+/* ==========================================================================
+   NAVIGATION & VELOCITY MARQUEES (nav.css)
+   ========================================================================== */
+/* Minimalist High-Fashion Navigation (Off-White style) */
+.manifesto-nav {
+  position: sticky;
+  top: 0;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 2rem;
+  background: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--line-subtle);
+}
+
+.manifesto-nav__left {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.nav-mono-tag {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+  padding: 2px 6px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 2px;
+}
+
+.manifesto-nav__left a {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  color: #a0a0a0;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.2s ease;
+}
+
+.manifesto-nav__left a:hover {
+  color: var(--neon-lime);
+}
+
+.manifesto-nav__center-brand {
+  font-family: var(--font-billboard);
+  font-size: 1.6rem;
+  letter-spacing: 0.05em;
+  color: #ffffff;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: opacity 0.2s ease;
+}
+
+.manifesto-nav__center-brand:hover {
+  opacity: 0.85;
+}
+
+.manifesto-nav__right {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.nav-mono-link {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  color: #a0a0a0;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.nav-mono-link:hover {
+  color: #ffffff;
+}
+
+.manifesto-nav__pill-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #000000;
+  background: var(--neon-lime);
+  padding: 0.45rem 1.25rem;
+  border-radius: 9999px;
+  text-decoration: none;
+  text-transform: uppercase;
+  box-shadow: 0 0 16px rgba(204, 255, 0, 0.3);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.manifesto-nav__pill-btn:hover {
+  background: var(--neon-lime-hover);
+  transform: translateY(-1px);
+}
+
+/* Sound Toggle Switch */
+.sound-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 0.45rem 0.9rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sound-toggle:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.45);
+}
+
+.sound-toggle.is-active {
+  background: #0d1a0d;
+  border-color: var(--neon-lime);
+  color: var(--neon-lime);
+  box-shadow: 0 0 14px rgba(204, 255, 0, 0.2);
+}
+
+.sound-toggle__bars {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 12px;
+}
+
+.sound-toggle__bar {
+  width: 2px;
+  background: currentColor;
+  border-radius: 1px;
+}
+
+.sound-toggle__bar--1 { height: 4px; }
+.sound-toggle__bar--2 { height: 8px; }
+.sound-toggle__bar--3 { height: 12px; }
+.sound-toggle__bar--4 { height: 6px; }
+
+.sound-toggle.is-active .sound-toggle__bar--1 {
+  animation: soundBar 0.6s ease-in-out infinite alternate;
+}
+.sound-toggle.is-active .sound-toggle__bar--2 {
+  animation: soundBar 0.8s ease-in-out infinite alternate 0.15s;
+}
+.sound-toggle.is-active .sound-toggle__bar--3 {
+  animation: soundBar 0.7s ease-in-out infinite alternate 0.3s;
+}
+.sound-toggle.is-active .sound-toggle__bar--4 {
+  animation: soundBar 0.9s ease-in-out infinite alternate 0.1s;
+}
+
+@keyframes soundBar {
+  0% { height: 3px; }
+  100% { height: 12px; }
+}
+
+/* --- TYPOGRAPHIC VELOCITY MARQUEES --- */
+/* --------------------------------------------------------------------------
+   MULTI-ROW TYPOGRAPHIC MARQUEE TAPESTRY ("STRIP LIKE THE IMAGE")
+   -------------------------------------------------------------------------- */
+.velocity-marquee-block {
+  width: 100%;
+  overflow: hidden;
+  user-select: none;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.marquee-row {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  display: flex;
+}
+
+.marquee-row__track {
+  display: flex;
+  width: max-content;
+  flex-shrink: 0;
+  will-change: transform;
+}
+
+.marquee-row__chunk {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  flex-shrink: 0;
+  padding-right: 0.5rem;
+}
+
+@keyframes marquee-left {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes marquee-right {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Neon Acid-Lime Thick Multi-Row Ribbon */
+.velocity-marquee--lime {
+  background: var(--neon-lime);
+  color: #000000;
+  padding: 0.75rem 0;
+  border-top: 2px solid #000000;
+  border-bottom: 2px solid #000000;
+  gap: 0.2rem;
+}
+
+.velocity-marquee--lime .marquee-row__chunk {
+  font-family: var(--font-billboard);
+  font-size: clamp(1.2rem, 2.1vw, 1.55rem);
+  line-height: 1.05;
+  letter-spacing: 0.03em;
+  color: #000000;
+}
+
+/* Dark Monochrome Monospace Multi-Row Ribbon */
+.velocity-marquee--dark {
+  background: #08090a;
+  color: #ffffff;
+  padding: 0.85rem 0;
+  border-top: 1px solid var(--line-subtle);
+  border-bottom: 1px solid var(--line-subtle);
+  gap: 0.3rem;
+}
+
+.velocity-marquee--dark .marquee-row__chunk {
+  font-family: var(--font-mono);
+  font-size: clamp(0.72rem, 1.05vw, 0.86rem);
+  line-height: 1.25;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+/* --- NAV RESPONSIVE --- */
+@media (max-width: 768px) {
+  .manifesto-nav__left a {
+    display: none;
+  }
+}

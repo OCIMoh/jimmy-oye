@@ -1,0 +1,800 @@
+/* ==========================================================================
+   SECTION 4: TOUR DISPATCH & THERMAL RECEIPT ROLL (tour.css)
+   ========================================================================== */
+/* Section 4: Tour Dispatch & Ticket Reservation Stage */
+.manifesto-section--tour {
+  padding: 5rem 2rem 6rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.manifesto-section--tour::before {
+  content: "";
+  position: absolute;
+  top: 15%;
+  right: -5%;
+  width: 550px;
+  height: 550px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(204, 255, 0, 0.045) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.manifesto-tour-head {
+  max-width: 1240px;
+  margin: 0 auto 3rem;
+  text-align: left;
+  position: relative;
+  z-index: 1;
+}
+
+.receipt-tour-wrapper {
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  gap: 3rem;
+  max-width: 1240px;
+  margin: 0 auto;
+  align-items: start;
+  position: relative;
+  z-index: 1;
+}
+
+/* Option 1 Left Column: Sticky Interactive POS Ticket Dispenser */
+.pos-dispenser-sticky-deck {
+  position: sticky;
+  top: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+/* Machine Housing */
+.pos-machine-housing {
+  background: #111216;
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  box-shadow: 0 25px 65px rgba(0, 0, 0, 0.85);
+  overflow: hidden;
+}
+
+.pos-machine-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: #090a0d;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: #888888;
+}
+
+.pos-indicator-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--neon-lime);
+  box-shadow: 0 0 10px rgba(204, 255, 0, 0.8);
+}
+
+.pos-topbar-label {
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+}
+
+.pos-baud-rate {
+  font-size: 0.6rem;
+  color: #666666;
+}
+
+/* Dispenser Mouth Opening Slot */
+.pos-mouth-slot {
+  height: 18px;
+  background: #050608;
+  margin: 14px 18px 0;
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.9);
+}
+
+.pos-mouth-slit {
+  width: 90%;
+  height: 3px;
+  background: #000000;
+  border-radius: 2px;
+}
+
+/* Emerging Fresh Off-White Thermal Paper Ticket Stub */
+.pos-emerging-ticket {
+  position: relative;
+  background: #fcfbf8;
+  color: #111215;
+  margin: -3px 18px 0;
+  padding: 18px 20px 20px;
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.5);
+  font-family: var(--font-mono);
+  animation: emergeTicket 0.22s ease-out;
+}
+
+@keyframes emergeTicket {
+  from {
+    transform: translateY(-8px);
+    opacity: 0.7;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.ticket-barcode-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 0.75rem;
+}
+
+.ticket-barcode-svg {
+  width: 70%;
+  height: 20px;
+  color: #111111;
+}
+
+.ticket-code-label {
+  font-size: 0.62rem;
+  color: #555555;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+}
+
+.ticket-city-header {
+  margin-bottom: 0.75rem;
+  text-align: left;
+}
+
+.ticket-city-title {
+  font-family: var(--font-billboard);
+  font-size: 2.3rem;
+  line-height: 0.9;
+  color: #0a0a0a;
+  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+}
+
+.ticket-venue-line {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #222222;
+  margin: 0;
+}
+
+.ticket-date-line {
+  font-size: 0.74rem;
+  color: #666666;
+  margin: 2px 0 0;
+}
+
+.ticket-dashed-sep {
+  overflow: hidden;
+  text-align: center;
+  color: #aaaaaa;
+  margin: 0.5rem 0;
+  font-size: 0.75rem;
+}
+
+.ticket-details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem 0.85rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.7rem;
+}
+
+.ticket-meta-cell {
+  display: flex;
+  flex-direction: column;
+}
+
+.ticket-meta-k {
+  display: block;
+  color: #777777;
+  font-size: 0.62rem;
+  letter-spacing: 0.05em;
+}
+
+.ticket-meta-v {
+  display: block;
+  color: #111111;
+  font-weight: 700;
+  font-size: 0.76rem;
+  margin-top: 1px;
+}
+
+.text-sold {
+  color: #dc2626 !important;
+}
+
+.text-live {
+  color: #15803d !important;
+}
+
+.ticket-action-row {
+  margin-top: 0.5rem;
+}
+
+.ticket-btn-action--lime {
+  width: 100%;
+  background: var(--neon-lime);
+  color: #000000;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 800;
+  padding: 12px 14px;
+  border-radius: 2px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 15px rgba(204, 255, 0, 0.4);
+}
+
+.ticket-btn-action--lime:hover {
+  background: #b5e600;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(204, 255, 0, 0.6);
+}
+
+.ticket-sold-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.ticket-sold-badge {
+  background: #fee2e2;
+  border: 2px solid #ef4444;
+  color: #dc2626;
+  font-family: var(--font-billboard);
+  font-size: 1.4rem;
+  padding: 6px;
+  text-align: center;
+  border-radius: 2px;
+}
+
+.ticket-btn-action--waitlist {
+  width: 100%;
+  background: #111111;
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 10px;
+  border-radius: 2px;
+  text-decoration: none;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.2s ease;
+}
+
+.ticket-btn-action--waitlist:hover {
+  background: #222222;
+  border-color: var(--neon-lime);
+  color: var(--neon-lime);
+}
+
+/* Realistic Sawtooth Perforated Tear Teeth at bottom */
+.ticket-sawtooth-teeth {
+  height: 12px;
+  background: linear-gradient(-45deg, transparent 8px, #fcfbf8 0) 0 8px,
+    linear-gradient(45deg, transparent 8px, #fcfbf8 0) 0 8px;
+  background-repeat: repeat-x;
+  background-size: 16px 16px;
+  margin: 0 -20px -20px;
+}
+
+/* Minimal Tour Stats & Next Stop Radar Card (Fills Dead Space!) */
+.pos-tour-radar-card {
+  background: #111216;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  padding: 1.25rem 1.4rem;
+  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.7);
+}
+
+.radar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.85rem;
+  font-family: var(--font-mono);
+}
+
+.radar-title {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 0.05em;
+}
+
+.radar-badge {
+  font-size: 0.58rem;
+  color: var(--neon-lime);
+  background: rgba(204, 255, 0, 0.1);
+  border: 1px solid rgba(204, 255, 0, 0.3);
+  padding: 1px 6px;
+  border-radius: 2px;
+}
+
+.radar-countdown-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.radar-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.radar-label {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: #888888;
+  font-weight: 700;
+}
+
+.radar-value {
+  font-family: var(--font-billboard);
+  font-size: 2.2rem;
+  line-height: 0.9;
+  color: var(--neon-lime);
+}
+
+.radar-sub {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  color: #aaaaaa;
+  margin-top: 2px;
+}
+
+.radar-footer-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #999999;
+  border-top: 1px dashed rgba(255, 255, 255, 0.1);
+  padding-top: 0.75rem;
+}
+
+.radar-pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--neon-lime);
+  animation: pulseDot 1.5s infinite;
+}
+
+@keyframes pulseDot {
+  0% {
+    transform: scale(0.9);
+    box-shadow: 0 0 0 0 rgba(204, 255, 0, 0.7);
+  }
+  70% {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 6px rgba(204, 255, 0, 0);
+  }
+  100% {
+    transform: scale(0.9);
+    box-shadow: 0 0 0 0 rgba(204, 255, 0, 0);
+  }
+}
+
+/* Option 1 Right Column: Continuous White Thermal Receipt Roll */
+.thermal-roll-paper {
+  position: relative;
+  background: #fcfbf8;
+  color: #111215;
+  border-radius: 4px;
+  padding: 32px 36px 36px;
+  box-shadow: 0 35px 85px rgba(0, 0, 0, 0.95);
+  font-family: var(--font-mono);
+}
+
+/* Sawtooth Top Cut Edge */
+.receipt-sawtooth-top {
+  height: 12px;
+  background: linear-gradient(-45deg, transparent 8px, #fcfbf8 0) 0 8px,
+    linear-gradient(45deg, transparent 8px, #fcfbf8 0) 0 8px;
+  background-repeat: repeat-x;
+  background-size: 16px 16px;
+  margin: -32px -36px 20px;
+  transform: rotate(180deg);
+}
+
+.roll-header {
+  text-align: center;
+  border-bottom: 1.5px dashed rgba(0, 0, 0, 0.2);
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.roll-header__stamp {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #111111;
+  letter-spacing: 0.14em;
+  margin-bottom: 4px;
+}
+
+.roll-header__title {
+  font-family: var(--font-billboard);
+  font-size: 2.2rem;
+  color: #0a0a0a;
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+  margin-bottom: 2px;
+}
+
+.roll-header__tagline {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #666666;
+  letter-spacing: 0.08em;
+}
+
+.roll-barcode-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin: 0.85rem 0 1rem;
+}
+
+.roll-barcode-svg {
+  width: 160px;
+  height: 22px;
+  color: #111111;
+}
+
+.roll-barcode-caption {
+  font-size: 0.65rem;
+  color: #555555;
+  letter-spacing: 0.15em;
+  font-weight: 700;
+}
+
+.roll-filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 0.75rem;
+}
+
+.roll-filter-btn {
+  background: #ece9e0;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  color: #222222;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.roll-filter-btn:hover {
+  background: #000000;
+  color: #ffffff;
+}
+
+.roll-filter-btn.is-active {
+  background: #000000;
+  color: #ffffff;
+  border-color: #000000;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.roll-ticket-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.roll-scissor-line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #888888;
+  font-size: 0.62rem;
+  font-weight: 700;
+  margin: 0.25rem 0 0.45rem;
+  user-select: none;
+}
+
+.scissor-rule {
+  flex: 1;
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.22);
+  height: 0;
+}
+
+.scissor-cut-text {
+  flex-shrink: 0;
+  letter-spacing: 0.08em;
+  color: #888888;
+  font-family: var(--font-mono);
+}
+
+.roll-ticket-entry {
+  padding: 10px 14px;
+  border-radius: 4px;
+  transition: background 0.18s ease, transform 0.18s ease;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.roll-ticket-entry:hover {
+  background: rgba(0, 0, 0, 0.04);
+  transform: translateX(4px);
+}
+
+.roll-ticket-entry.is-selected {
+  background: rgba(204, 255, 0, 0.14);
+  border-color: rgba(0, 0, 0, 0.25);
+}
+
+.roll-ticket-entry.is-sold-out {
+  opacity: 0.75;
+}
+
+.roll-ticket-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.roll-ticket-info {
+  flex: 1;
+}
+
+.roll-city-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 2px;
+}
+
+.roll-city-name {
+  font-family: var(--font-billboard);
+  font-size: 1.85rem;
+  line-height: 0.95;
+  color: #0a0a0a;
+  letter-spacing: 0.01em;
+  margin: 0;
+}
+
+.roll-status-pill {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 3px;
+  letter-spacing: 0.06em;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.roll-status-pill--tickets-live {
+  background: #000000;
+  color: var(--neon-lime);
+  border: 1px solid #000000;
+}
+
+.roll-status-pill--few-seats-left {
+  background: #ffedd5;
+  color: #9a3412;
+  border: 1.5px solid #ea580c;
+  box-shadow: 0 1px 3px rgba(234, 88, 12, 0.2);
+}
+
+.roll-status-pill--filling-fast {
+  background: #fef08a;
+  color: #713f12;
+  border: 1.5px solid #ca8a04;
+  box-shadow: 0 1px 3px rgba(202, 138, 4, 0.2);
+}
+
+.roll-status-pill--announced {
+  background: #e2e8f0;
+  color: #334155;
+  border: 1px solid #94a3b8;
+}
+
+.roll-stamp-sold {
+  border: 2px solid #dc2626;
+  color: #dc2626;
+  font-family: var(--font-billboard);
+  font-size: 1rem;
+  line-height: 1;
+  padding: 2px 6px;
+  transform: rotate(-3deg);
+  font-weight: 900;
+  background: rgba(239, 68, 68, 0.08);
+}
+
+.roll-venue-text {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #333333;
+  margin: 0;
+}
+
+.roll-date-text {
+  font-size: 0.72rem;
+  color: #666666;
+  font-weight: 600;
+}
+
+.roll-ticket-action {
+  flex-shrink: 0;
+}
+
+.roll-btn-tear {
+  background: var(--neon-lime);
+  color: #000000;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 6px 12px;
+  border-radius: 2px;
+  border: 1px solid #000000;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.15s ease;
+  box-shadow: 2px 2px 0 #000000;
+}
+
+.roll-btn-tear:hover {
+  background: #000000;
+  color: var(--neon-lime);
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 #000000;
+}
+
+.roll-sold-label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: #dc2626;
+  letter-spacing: 0.08em;
+}
+
+/* Roll Footer */
+.roll-footer {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1.5px dashed rgba(0, 0, 0, 0.2);
+  font-size: 0.7rem;
+  color: #444444;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.roll-footer-stat {
+  display: flex;
+  justify-content: space-between;
+}
+
+.roll-footer-stat strong {
+  color: #000000;
+  font-weight: 800;
+}
+
+.roll-footer-auth {
+  text-align: center;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px dotted rgba(0, 0, 0, 0.15);
+  font-size: 0.64rem;
+  color: #666666;
+}
+
+/* Sawtooth Bottom Cut Edge */
+.receipt-sawtooth-bottom {
+  height: 12px;
+  background: linear-gradient(-45deg, transparent 8px, #fcfbf8 0) 0 8px,
+    linear-gradient(45deg, transparent 8px, #fcfbf8 0) 0 8px;
+  background-repeat: repeat-x;
+  background-size: 16px 16px;
+  margin: 16px -36px -36px;
+}
+
+/* Bridge link below roll */
+.roll-bridge-link {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.roll-bridge-link a {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 2px;
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: #888888;
+  transition: color 0.15s ease;
+}
+
+.roll-bridge-link strong {
+  color: #ffffff;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.roll-bridge-link a:hover strong {
+  color: var(--neon-lime);
+}
+
+
+/* --- TOUR RESPONSIVE --- */
+@media (max-width: 1024px) {
+  .receipt-tour-wrapper {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .pos-dispenser-sticky-deck {
+    position: static;
+  }
+  .pos-machine-housing {
+    border-radius: 8px;
+  }
+  .thermal-roll-paper {
+    padding: 24px 16px 28px;
+  }
+  .receipt-sawtooth-top {
+    margin: -24px -16px 16px;
+  }
+  .receipt-sawtooth-bottom {
+    margin: 16px -16px -28px;
+  }
+  .roll-ticket-main {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  .roll-ticket-action {
+    width: 100%;
+  }
+  .roll-btn-tear {
+    width: 100%;
+    justify-content: center;
+    padding: 8px 12px;
+  }
+}

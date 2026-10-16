@@ -1,0 +1,743 @@
+/* ==========================================================================
+   SECTION 3: THE CRAFT & VOICE MEMO CLIPBOARD (craft.css)
+   ========================================================================== */
+/* Story Wrap */
+.manifesto-story-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 4rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: start;
+}
+
+/* --------------------------------------------------------------------------
+   THE CRAFT: HOSTEL NOTE SCRAP & DJ CARD (EXACT MATCH TO MOCKUP)
+   -------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------
+   THE CRAFT: HOSTEL NOTE SCRAP & DJ CARD (EXACT MATCH TO MOCKUP)
+   -------------------------------------------------------------------------- */
+.manifesto-tag--craft {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  color: #a1a1aa;
+  font-weight: 700;
+  margin-bottom: 0.85rem;
+}
+
+/* Zine Punk Cutout Ransom Title */
+.ransom-title {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1.4rem;
+  user-select: none;
+}
+
+.ransom-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ransom-word {
+  display: inline-flex;
+  align-items: center;
+  gap: 2.5px;
+}
+
+.ransom-char {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  color: #000000;
+  font-family: var(--font-billboard);
+  font-size: clamp(2.4rem, 5vw, 4.2rem);
+  line-height: 0.88;
+  padding: 6px 9px 3px;
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.45);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ransom-char:hover {
+  transform: scale(1.08) rotate(0deg) !important;
+}
+
+.char-tilt-1 { transform: rotate(-2.5deg); }
+.char-tilt-2 { transform: rotate(1.8deg); }
+.char-tilt-3 { transform: rotate(-1.2deg); }
+.char-tilt-4 { transform: rotate(2.8deg); }
+.char-tilt-5 { transform: rotate(-2deg); }
+.char-tilt-6 { transform: rotate(1.5deg); }
+
+/* Inverted BORN letters */
+.ransom-word--inverted .ransom-char {
+  background: #000000;
+  color: #ffffff;
+  border: 2.5px solid #ffffff;
+  box-shadow: 3px 5px 12px rgba(0, 0, 0, 0.6);
+}
+
+.hostel-note-scrap {
+  position: relative;
+  background: #fef08a;
+  background-image: repeating-linear-gradient(transparent, transparent 23px, rgba(0, 0, 0, 0.04) 24px);
+  color: #1a1710;
+  padding: 1.8rem 1.8rem 1.5rem;
+  border-radius: 2px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+  transform: rotate(-3.5deg);
+  margin: 2.2rem 0;
+  max-width: 360px;
+  transition: transform 0.25s ease;
+}
+
+.hostel-note-scrap:hover {
+  transform: rotate(-1deg) translateY(-2px);
+}
+
+/* 4 Taped Corners exactly like Mockup */
+.hostel-note-tape {
+  position: absolute;
+  width: 52px;
+  height: 20px;
+  background: rgba(254, 240, 138, 0.82);
+  backdrop-filter: blur(2px);
+  border: 1px dashed rgba(0, 0, 0, 0.2);
+  z-index: 4;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+  pointer-events: none;
+}
+
+.hostel-note-tape--tl {
+  top: -10px;
+  left: -12px;
+  transform: rotate(-35deg);
+}
+
+.hostel-note-tape--tr {
+  top: -10px;
+  right: -12px;
+  transform: rotate(35deg);
+}
+
+.hostel-note-tape--bl {
+  bottom: -10px;
+  left: -12px;
+  transform: rotate(35deg);
+}
+
+.hostel-note-tape--br {
+  bottom: -10px;
+  right: -12px;
+  transform: rotate(-35deg);
+}
+
+.hostel-note-header {
+  margin-bottom: 0.85rem;
+}
+
+.hostel-note-tag {
+  font-family: var(--font-mono);
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #111111;
+  letter-spacing: 0.04em;
+  border-bottom: 2px solid #111111;
+  padding-bottom: 3px;
+  display: inline-block;
+}
+
+.hostel-note-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.hostel-note-lead-thought {
+  font-family: var(--font-handwritten);
+  font-size: 1.05rem;
+  color: #2b2518;
+  line-height: 1.35;
+  margin: 0 0 0.35rem 0;
+}
+
+.hostel-note-idea {
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #111111;
+  margin: 0;
+}
+
+.hostel-note-dialogue {
+  font-family: var(--font-handwritten);
+  font-size: 1.1rem;
+  color: #1f1b13;
+  line-height: 1.35;
+  margin: 0;
+}
+
+.hostel-note-sign {
+  display: block;
+  font-family: var(--font-handwritten);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #111111;
+  text-align: right;
+  margin-top: 0.8rem;
+  letter-spacing: 0.02em;
+  transform: rotate(-2deg);
+}
+
+/* DJ Club Sets Card (Matching Mockup) */
+.dj-card {
+  background: #111216;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 1.5rem 1.6rem;
+  border-radius: 12px;
+  max-width: 420px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+}
+
+.dj-card__topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.dj-card__title {
+  font-family: var(--font-mono);
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+}
+
+.dj-card__live-pill {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 800;
+  color: #ff3366;
+  background: rgba(255, 51, 102, 0.12);
+  border: 1px solid rgba(255, 51, 102, 0.3);
+  padding: 2px 7px;
+  border-radius: 3px;
+}
+
+.dj-card__text {
+  font-size: 0.88rem;
+  color: #a4a4b0;
+  line-height: 1.6;
+  margin-bottom: 0.95rem;
+}
+
+.dj-card__link {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #ffffff;
+  text-decoration: none;
+  letter-spacing: 0.06em;
+  border-bottom: 1.5px solid rgba(255, 255, 255, 0.4);
+  padding-bottom: 2px;
+  transition: all 0.18s ease;
+}
+
+.dj-card__link:hover {
+  color: var(--neon-lime);
+  border-color: var(--neon-lime);
+}
+
+/* --------------------------------------------------------------------------
+   SECTION 3 RIGHT: EXACT STANDUP SCRIPT BREAKDOWN & VOICE MEMO CLIPBOARD
+   -------------------------------------------------------------------------- */
+.script-clipboard-deck {
+  position: relative;
+  width: 100%;
+  max-width: 540px;
+  margin: 0 auto;
+}
+
+/* The Physical Black Clipboard */
+.script-board {
+  position: relative;
+  background: #111215;
+  border-radius: 20px;
+  border: 1.5px solid rgba(255, 255, 255, 0.09);
+  box-shadow: 0 35px 85px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  padding: 44px 18px 32px;
+}
+
+/* Realistic Metal Bulldog Clamp Centered at Top */
+.script-metal-clamp {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 160px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+}
+
+.script-clamp-wire {
+  width: 72px;
+  height: 26px;
+  border: 3.5px solid #a1a1aa;
+  border-bottom: none;
+  border-radius: 12px 12px 0 0;
+  margin-bottom: -3px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+.script-clamp-bar {
+  width: 100%;
+  height: 32px;
+  background: linear-gradient(180deg, #374151 0%, #111827 100%);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 4px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.85);
+}
+
+/* The Yellow Legal Pad Paper */
+.script-legal-sheet {
+  position: relative;
+  background: #fff9b0;
+  color: #1a1710;
+  border-radius: 3px;
+  min-height: 550px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
+  padding: 40px 24px 64px 68px;
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent 30px,
+    rgba(59, 130, 246, 0.16) 30px,
+    rgba(59, 130, 246, 0.16) 31px
+  );
+  overflow: hidden;
+}
+
+/* Double Red Vertical Margin Line on the left */
+.sheet-red-margin {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 54px;
+  width: 5px;
+  border-left: 1.5px solid rgba(220, 38, 38, 0.45);
+  border-right: 1px solid rgba(220, 38, 38, 0.35);
+  pointer-events: none;
+}
+
+/* Script Content Blocks */
+.sheet-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.95rem;
+  position: relative;
+}
+
+.sheet-block--setup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.sheet-heading {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 800;
+  color: #111111;
+  letter-spacing: 0.04em;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.sheet-setup-annotated {
+  position: relative;
+}
+
+.sheet-bracket-tag {
+  position: absolute;
+  left: -58px;
+  top: 2px;
+  color: #dc2626;
+  font-family: var(--font-handwritten);
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+}
+
+.bracket-label {
+  display: block;
+}
+
+.bracket-arrow {
+  font-size: 1.25rem;
+  line-height: 0.9;
+}
+
+.sheet-body-text {
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #242016;
+  line-height: 31px;
+  margin: 0;
+}
+
+/* Intermediate Line with Red Annotation */
+.sheet-transition-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.15rem;
+}
+
+.sheet-subheading {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #111111;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.sheet-red-annotation--top {
+  font-family: var(--font-handwritten);
+  font-size: 1.25rem;
+  color: #dc2626;
+  font-weight: 700;
+}
+
+.sheet-arrow-row {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin: -0.25rem 0 0.1rem;
+  padding-left: 2rem;
+}
+
+.sheet-red-down-arrow {
+  font-size: 1.4rem;
+  color: #dc2626;
+  line-height: 1;
+}
+
+.sheet-red-annotation--mid-right {
+  font-family: var(--font-handwritten);
+  font-size: 1.15rem;
+  color: #dc2626;
+  font-weight: 700;
+}
+
+.sheet-transition-row--second {
+  margin-top: 0;
+}
+
+.sheet-red-annotation--mid {
+  font-family: var(--font-handwritten);
+  font-size: 1.15rem;
+  color: #dc2626;
+  font-weight: 700;
+}
+
+/* Punchline Row with Highlighter */
+.sheet-punchline-row {
+  position: relative;
+  margin: 0.35rem 0;
+}
+
+.sheet-annotation-side {
+  position: absolute;
+  left: -60px;
+  top: 4px;
+  color: #dc2626;
+  font-family: var(--font-handwritten);
+  font-size: 1.05rem;
+  line-height: 1.1;
+  width: 52px;
+}
+
+.sheet-highlighter-wrapper {
+  display: inline;
+}
+
+.sheet-highlighter-mark {
+  background: #facc15;
+  color: #000000;
+  font-family: var(--font-body);
+  font-size: 1.12rem;
+  font-weight: 800;
+  padding: 5px 8px;
+  line-height: 1.45;
+  display: inline;
+  border-radius: 2px;
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.12);
+  transition: all 0.3s ease;
+}
+
+.sheet-highlighter-wrapper.is-active .sheet-highlighter-mark {
+  background: var(--neon-lime);
+  box-shadow: 0 0 25px rgba(204, 255, 0, 0.9);
+}
+
+.sheet-outro-text {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: #383222;
+  line-height: 1.5;
+  margin: 0.2rem 0 0.65rem 0;
+}
+
+/* Bottom Stamp Row */
+.sheet-bottom-stamp-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.85rem;
+}
+
+.sheet-decibel-arrow {
+  font-family: var(--font-handwritten);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #dc2626;
+}
+
+/* Bold Black Box Stamp exactly like Mockup */
+.sheet-box-stamp {
+  border: 4px solid #0a0a0a;
+  padding: 6px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: rotate(-4deg);
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.25);
+  background: rgba(255, 255, 255, 0.25);
+  flex-shrink: 0;
+}
+
+.stamp-metric {
+  font-family: var(--font-billboard);
+  font-size: 2.3rem;
+  line-height: 0.88;
+  color: #0a0a0a;
+  letter-spacing: -0.02em;
+}
+
+.stamp-sub {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 900;
+  color: #0a0a0a;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Floating Voice Memo Audio Player Bar (Docked across bottom) */
+.script-memo-player-bar {
+  position: relative;
+  width: calc(100% - 16px);
+  margin: -26px auto 0;
+  z-index: 10;
+  background: #111216;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 14px;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.95);
+}
+
+.memo-btn-play {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: none;
+  color: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  flex-shrink: 0;
+}
+
+.memo-btn-play:hover {
+  background: var(--neon-lime);
+  transform: scale(1.08);
+  box-shadow: 0 4px 15px rgba(204, 255, 0, 0.5);
+}
+
+.memo-btn-play.is-playing {
+  background: #ff2d6a;
+  color: #ffffff;
+  animation: pulsePlayBtn 0.8s infinite alternate;
+}
+
+@keyframes pulsePlayBtn {
+  from { transform: scale(1); box-shadow: 0 0 10px rgba(255, 45, 106, 0.5); }
+  to { transform: scale(1.06); box-shadow: 0 0 20px rgba(255, 45, 106, 0.9); }
+}
+
+.memo-track-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.memo-track-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.memo-track-title {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.03em;
+}
+
+.memo-pager-stepper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.memo-stepper-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  width: 22px;
+  height: 22px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.memo-stepper-btn:hover {
+  background: var(--neon-lime);
+  color: #000000;
+}
+
+.memo-stepper-count {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #888888;
+}
+
+.memo-scrubber-track {
+  position: relative;
+  width: 100%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 2px;
+}
+
+.memo-scrubber-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 8%;
+  background: #ffffff;
+  border-radius: 2px;
+  transition: width 0.12s linear;
+}
+
+.memo-scrubber-fill.is-playing {
+  background: var(--neon-lime);
+}
+
+.memo-scrubber-dot {
+  position: absolute;
+  left: 8%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+  transition: left 0.12s linear;
+}
+
+.memo-scrubber-dot.is-playing {
+  background: var(--neon-lime);
+  box-shadow: 0 0 8px rgba(204, 255, 0, 0.9);
+}
+
+
+/* --- CRAFT RESPONSIVE --- */
+@media (max-width: 1024px) {
+  .manifesto-story-wrap {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .script-board {
+    padding: 38px 10px 24px;
+    border-radius: 14px;
+  }
+  .script-legal-sheet {
+    padding: 36px 14px 58px 46px;
+    min-height: auto;
+  }
+  .sheet-red-margin {
+    left: 36px;
+  }
+  .sheet-bracket-tag {
+    left: -42px;
+    font-size: 0.85rem;
+  }
+  .sheet-annotation-side {
+    left: -44px;
+    font-size: 0.78rem;
+    width: 38px;
+  }
+  .sheet-bottom-stamp-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  .sheet-box-stamp {
+    align-self: flex-end;
+  }
+  .script-memo-player-bar {
+    padding: 10px 14px;
+    gap: 10px;
+    margin-top: -20px;
+  }
+  .memo-track-title {
+    font-size: 0.68rem;
+  }
+}

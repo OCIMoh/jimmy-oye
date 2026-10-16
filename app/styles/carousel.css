@@ -1,0 +1,894 @@
+/* ==========================================================================
+   SECTION 2: BIT POSTER WALL CAROUSEL & MODAL (carousel.css)
+   ========================================================================== */
+   SECTION 2: PANORAMIC OVERLAPPING POSTER WALL + THERMAL RESERVATION
+   -------------------------------------------------------------------------- */
+.manifesto-wall-section {
+  position: relative;
+  z-index: 10;
+  background: var(--bg-pitch);
+  border-top: 1px solid var(--line-subtle);
+  padding-bottom: 2.5rem;
+}
+
+/* Subheader: Minimalist Duct-Tape Strip (Option 4) */
+.manifesto-wall-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 2rem;
+  border-bottom: 1px solid var(--line-light);
+  gap: 1.5rem;
+  position: relative;
+  z-index: 5;
+}
+
+.manifesto-wall-header__left {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.wall-tape-brand-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.wall-tape-star {
+  color: var(--neon-lime);
+  font-size: 0.85rem;
+}
+
+.wall-tape-brand {
+  color: #ffffff;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+.wall-tape-sep {
+  color: rgba(255, 255, 255, 0.25);
+  font-weight: 400;
+}
+
+.wall-tape-title {
+  color: var(--paper-bone-dark);
+  font-weight: 700;
+}
+
+.wall-tape-count {
+  font-size: 0.65rem;
+  color: var(--neon-lime);
+  background: rgba(204, 255, 0, 0.12);
+  border: 1px solid rgba(204, 255, 0, 0.3);
+  padding: 1px 6px;
+  border-radius: 2px;
+  letter-spacing: 0.05em;
+}
+
+.wall-tape-rule-wrap {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-width: 40px;
+}
+
+.wall-tape-rule {
+  width: 100%;
+  height: 1px;
+  background: var(--line-subtle);
+}
+
+.wall-tape-scrap {
+  position: absolute;
+  left: 35%;
+  top: 50%;
+  transform: translateY(-50%) rotate(-2deg);
+  width: 52px;
+  height: 14px;
+  background: rgba(255, 255, 255, 0.28);
+  border-left: 1px dashed rgba(255, 255, 255, 0.5);
+  border-right: 1px dashed rgba(255, 255, 255, 0.5);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+}
+
+.manifesto-wall-header__right {
+  flex-shrink: 0;
+}
+
+.wall-tape-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+  background: #111216;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  padding: 5px 12px;
+  border-radius: 2px;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.wall-tape-hint:hover {
+  border-color: var(--neon-lime);
+  color: var(--neon-lime);
+  box-shadow: 0 0 12px rgba(204, 255, 0, 0.25);
+}
+
+.wall-tape-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--neon-lime);
+  box-shadow: 0 0 6px rgba(204, 255, 0, 0.8);
+  animation: pulseDot 1.5s infinite;
+}
+
+.wall-tape-arrow {
+  color: var(--neon-lime);
+  font-size: 0.75rem;
+}
+
+/* --------------------------------------------------------------------------
+/*  */
+.panoramic-wall-strip {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 4.5rem 0 5rem; /* Generous vertical clearance so hovering cards NEVER get cut off */
+  user-select: none;
+}
+
+.infinite-poster-ticker {
+  width: 100%;
+  overflow: visible; /* Prevents inner clipping of elevated/scaled cards */
+  display: flex;
+}
+
+.infinite-poster-track {
+  display: flex;
+  width: max-content;
+  flex-shrink: 0;
+  will-change: transform;
+  animation: posterMarqueeScroll 65s linear infinite;
+}
+
+/* Pause conveyor ONLY when hovering directly over an individual poster card */
+.infinite-poster-track:has(.zine-poster-card:hover) {
+  animation-play-state: paused !important;
+}
+
+/* Poster Group (21 Cards in Primary & Seamless Duplicate) */
+.infinite-poster-group {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  padding: 0 0.5rem;
+}
+
+/* Overlapping Zine Poster Wrapper (Enlarged size) */
+.zine-poster-wrapper {
+  flex-shrink: 0;
+  width: 285px;
+  margin-right: -36px; /* Physical overlapping collage wall */
+  position: relative;
+  transition: z-index 0.2s ease;
+}
+
+.zine-poster-wrapper:hover,
+.zine-poster-wrapper.is-focused {
+  z-index: 60 !important;
+}
+
+/* The physical poster card itself (Enlarged scale: 285px x 430px) */
+button.zine-poster-card,
+.zine-poster-card {
+  appearance: none;
+  -webkit-appearance: none;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  outline: none;
+  background: #101114;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  position: relative;
+  width: 285px;
+  height: 430px;
+  padding: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  transform: perspective(800px) translateY(var(--card-y, 0px)) rotate(var(--card-rotate, 0deg)) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transform-origin: center center;
+  transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.3, 1.2), box-shadow 0.25s ease, border-color 0.25s ease;
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.75), 0 3px 8px rgba(0, 0, 0, 0.5);
+}
+
+button.zine-poster-card:focus-visible {
+  outline: 2px solid var(--neon-lime);
+  outline-offset: 4px;
+}
+
+/* Hover effect: lifts out cleanly from the overlap, straightens up, scales up, and glows with NO cut off */
+button.zine-poster-card:hover,
+.zine-poster-card:hover,
+.zine-poster-wrapper:hover .zine-poster-card {
+  transform: perspective(800px) translateY(-18px) scale(1.06) rotate(0deg) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) !important;
+  border-color: var(--neon-lime);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.95), 0 0 35px rgba(204, 255, 0, 0.35);
+}
+
+@keyframes posterMarqueeScroll {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.noir-poster-inner,
+.neon-poster-inner,
+.zine-tape {
+  pointer-events: none;
+}
+
+/* Film Noir Card Inner */
+.noir-poster-inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.noir-poster-header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.45rem;
+}
+
+.noir-poster-title-lead {
+  font-family: var(--font-billboard);
+  font-size: 1.35rem;
+  line-height: 0.9;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+}
+
+.noir-poster-title-sub {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: #a0a0a0;
+  letter-spacing: 0.05em;
+}
+
+.noir-poster-artwork {
+  position: relative;
+  width: 100%;
+  height: 275px;
+  min-height: 275px;
+  overflow: hidden;
+  background: #000000;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.noir-poster-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%) contrast(135%);
+  transition: transform 0.3s ease;
+}
+
+.zine-poster-card:hover .noir-poster-img {
+  transform: scale(1.04);
+}
+
+.noir-poster-grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle, transparent 60%, rgba(0, 0, 0, 0.4) 100%);
+}
+
+.noir-poster-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--line-light);
+}
+
+.noir-poster-name {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.noir-poster-views {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--neon-lime);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.views-dot {
+  font-size: 0.45rem;
+}
+
+/* Signature Neon Acid-Lime Shocker Poster (Card 5) */
+button.zine-poster-card--neon,
+.zine-poster-card--neon {
+  background: var(--neon-lime) !important;
+  border: 2px solid #000000;
+  color: #000000;
+}
+
+.neon-poster-inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+}
+
+.neon-poster-top {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 700;
+  border-bottom: 1.5px solid #000000;
+  padding-bottom: 0.35rem;
+}
+
+.neon-poster-headline {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-billboard);
+  font-size: 2.8rem;
+  line-height: 0.85;
+  color: #000000;
+}
+
+.neon-poster-headline__huge {
+  font-size: 4.5rem;
+  line-height: 0.8;
+}
+
+.neon-poster-bottom {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  border-top: 1.5px solid #000000;
+  padding-top: 0.35rem;
+}
+
+/* Tape on card */
+.zine-tape--top {
+  position: absolute;
+  top: -9px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 62px;
+  height: 18px;
+  background: rgba(255, 255, 255, 0.42);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* --- MODAL INSPECTION DRAWER --- */
+/* Modal Inspection Drawer */
+@keyframes modalOverlayFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalPanelPop {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.poster-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  animation: modalOverlayFade 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.poster-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.poster-modal-panel {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 920px;
+  background: #0c0d10;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  overflow: hidden;
+  animation: modalPanelPop 0.26s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.poster-panel__left {
+  background: #050507;
+  padding: 2.25rem 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+}
+
+.poster-panel__artwork-frame {
+  position: relative;
+  width: 100%;
+  max-width: 340px;
+  height: 460px;
+  border: 2px solid #ffffff;
+  background: #000000;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.85);
+  overflow: visible;
+  transition: transform 0.3s ease;
+}
+
+/* Tactile masking tape corners */
+.poster-panel__tape {
+  position: absolute;
+  width: 58px;
+  height: 18px;
+  background: rgba(245, 240, 220, 0.72);
+  backdrop-filter: blur(2px);
+  border: 1px dashed rgba(0, 0, 0, 0.3);
+  z-index: 5;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+}
+
+.poster-panel__tape--tl {
+  top: -9px;
+  left: -15px;
+  transform: rotate(-24deg);
+}
+
+.poster-panel__tape--tr {
+  top: -9px;
+  right: -15px;
+  transform: rotate(20deg);
+}
+
+.poster-panel__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%) contrast(125%);
+  transition: filter 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s ease;
+}
+
+.poster-panel__artwork-frame:hover .poster-panel__img {
+  filter: grayscale(0%) contrast(105%);
+  transform: scale(1.02);
+}
+
+.poster-panel__tag-stamp {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 4;
+  background: var(--neon-lime);
+  color: #000000;
+  font-family: var(--font-billboard);
+  font-size: 1.15rem;
+  line-height: 1;
+  padding: 4px 8px;
+  border: 1px solid #000000;
+  transform: rotate(-3deg);
+  box-shadow: 2px 2px 0 #000000;
+}
+
+.poster-panel__artwork-hint {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  background: rgba(0, 0, 0, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #a8a8b2;
+  padding: 3px 10px;
+  border-radius: 2px;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  white-space: nowrap;
+}
+
+.poster-panel__artwork-frame:hover .poster-panel__artwork-hint {
+  opacity: 0;
+}
+
+.poster-panel__right {
+  padding: 2rem 2.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #0c0d10;
+}
+
+/* Stepper Navigation Deck */
+.poster-panel__nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.poster-panel__stepper {
+  display: inline-flex;
+  align-items: center;
+  background: #14151a;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 4px;
+  padding: 2px;
+}
+
+.poster-panel__step-btn {
+  background: transparent;
+  border: none;
+  color: #e0e0e0;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border-radius: 2px;
+}
+
+.poster-panel__step-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--neon-lime);
+}
+
+.poster-panel__step-count {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #777782;
+  letter-spacing: 0.06em;
+  padding: 0 10px;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.poster-panel__close-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  padding: 5px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.poster-panel__close-btn:hover {
+  background: #ff2d6a;
+  border-color: #ff2d6a;
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(255, 45, 106, 0.4);
+}
+
+.poster-panel__close-esc {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: #888894;
+  background: rgba(0, 0, 0, 0.45);
+  padding: 1px 5px;
+  border-radius: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.poster-panel__close-btn:hover .poster-panel__close-esc {
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.poster-panel__close-icon {
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* Title & Subtitle Badge */
+.poster-panel__header-group {
+  margin-bottom: 0.5rem;
+}
+
+.poster-panel__badge {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: var(--neon-lime);
+  letter-spacing: 0.08em;
+  display: inline-block;
+  margin-bottom: 0.35rem;
+}
+
+.poster-panel__title {
+  font-family: var(--font-billboard);
+  font-size: 2.35rem;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.poster-panel__note {
+  font-size: 0.92rem;
+  color: #a8a8b2;
+  line-height: 1.55;
+  margin-bottom: 1.25rem;
+  font-family: var(--font-sans);
+}
+
+/* Crowd Intel & Setlist Meta Grid (Fills Dead Space) */
+.poster-panel__meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+  margin-bottom: 1.4rem;
+  padding: 0.85rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 4px;
+}
+
+.poster-panel__meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.poster-panel__meta-label {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  font-weight: 800;
+  color: #6a6b74;
+  letter-spacing: 0.1em;
+}
+
+.poster-panel__meta-val {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #eaeaea;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Action Buttons Hierarchy */
+.poster-panel__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.poster-panel__ig-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  background: linear-gradient(135deg, #e1306c 0%, #fd1d1d 50%, #f56040 100%);
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 800;
+  padding: 0.85rem 1rem;
+  text-decoration: none;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  box-shadow: 0 4px 18px rgba(225, 48, 108, 0.35);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.poster-panel__ig-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 26px rgba(225, 48, 108, 0.55);
+  filter: brightness(1.08);
+}
+
+.poster-panel__ig-icon {
+  font-size: 0.72rem;
+}
+
+.poster-panel__arrow {
+  font-size: 0.9rem;
+  transition: transform 0.2s ease;
+}
+
+.poster-panel__ig-btn:hover .poster-panel__arrow {
+  transform: translate(2px, -2px);
+}
+
+.poster-panel__secondary-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+}
+
+.poster-panel__ticket-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: #08090b;
+  border: 1.5px solid var(--neon-lime);
+  color: var(--neon-lime);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 0.7rem;
+  text-decoration: none;
+  border-radius: 4px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  transition: all 0.2s ease;
+}
+
+.poster-panel__ticket-btn:hover {
+  background: var(--neon-lime);
+  color: #000000;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(204, 255, 0, 0.3);
+}
+
+.poster-panel__share-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: #17181f;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.7rem;
+  cursor: pointer;
+  border-radius: 4px;
+  letter-spacing: 0.03em;
+  transition: all 0.2s ease;
+}
+
+.poster-panel__share-btn:hover {
+  background: #232530;
+  border-color: rgba(255, 255, 255, 0.32);
+  transform: translateY(-2px);
+}
+
+/* Hotkey Helper Bar */
+.poster-panel__hotkey-bar {
+  margin-top: 1.25rem;
+  padding-top: 0.75rem;
+  border-top: 1px dashed rgba(255, 255, 255, 0.1);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: #555761;
+  text-align: center;
+  letter-spacing: 0.06em;
+}
+
+
+/* --- CAROUSEL & MODAL RESPONSIVE --- */
+@media (max-width: 768px) {
+  .manifesto-wall-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+  }
+  .wall-tape-brand-badge {
+    flex-wrap: wrap;
+    font-size: 0.7rem;
+  }
+  .wall-tape-rule-wrap {
+    display: none;
+  }
+  .wall-tape-hint {
+    font-size: 0.64rem;
+    padding: 4px 10px;
+  }
+  .poster-modal-panel {
+    grid-template-columns: 1fr;
+    max-height: 92vh;
+    overflow-y: auto;
+  }
+  .poster-panel__left {
+    padding: 1.5rem 1rem 0.75rem;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .poster-panel__artwork-frame {
+    height: 250px;
+    max-width: 220px;
+  }
+  .poster-panel__right {
+    padding: 1.25rem;
+  }
+  .poster-panel__title {
+    font-size: 1.85rem;
+  }
+  .poster-panel__secondary-actions {
+    grid-template-columns: 1fr;
+  }
+  .reservation-unit-body {
+    grid-template-columns: 1fr;
+  }
+  .receipt-ticket__main {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  .receipt-ticket__schedule {
+    text-align: left;
+  }
+}

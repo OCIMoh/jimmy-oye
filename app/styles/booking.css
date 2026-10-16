@@ -1,0 +1,110 @@
+/* ==========================================================================
+   SECTION 5: THE GREENROOM & BOOKING DISPATCH (booking.css)
+   ========================================================================== */
+/* Booking Layout */
+.manifesto-booking-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 4rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.manifesto-booking-channels {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.booking-channel {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: #111215;
+  border: 1px solid var(--line-subtle);
+  padding: 1rem 1.25rem;
+  border-radius: 4px;
+  text-decoration: none;
+  color: #ffffff;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.booking-channel:hover {
+  border-color: var(--neon-lime);
+  transform: translateX(4px);
+}
+
+.booking-channel strong {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+
+.booking-channel span {
+  font-size: 0.8rem;
+  color: #999;
+}
+
+.manifesto-booking-form {
+  background: #101114;
+  border: 1px solid var(--line-subtle);
+  padding: 2rem;
+  border-radius: 4px;
+}
+
+.booking-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.booking-field--full {
+  grid-column: 1 / -1;
+}
+
+.booking-field label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #999;
+  margin-bottom: 0.4rem;
+}
+
+.booking-field input,
+.booking-field select,
+.booking-field textarea {
+  width: 100%;
+  background: #000000;
+  border: 1px solid var(--line-subtle);
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: 2px;
+}
+
+.booking-field input:focus,
+.booking-field select:focus,
+.booking-field textarea:focus {
+  outline: none;
+  border-color: var(--neon-lime);
+}
+
+
+/* --- BOOKING RESPONSIVE --- */
+@media (max-width: 1024px) {
+  .manifesto-booking-wrap {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .booking-form-grid {
+    grid-template-columns: 1fr;
+  }
+}

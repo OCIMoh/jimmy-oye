@@ -10,6 +10,10 @@ interface SoundContextType {
   playThud: () => void;
   playClick: () => void;
   playWhoosh: () => void;
+  playCrowdLaugh: () => void;
+  playMicClick: () => void;
+  playPunch: () => void;
+  playPaperTear: () => void;
 }
 
 const SoundContext = createContext<SoundContextType>({
@@ -20,6 +24,10 @@ const SoundContext = createContext<SoundContextType>({
   playThud: () => {},
   playClick: () => {},
   playWhoosh: () => {},
+  playCrowdLaugh: () => {},
+  playMicClick: () => {},
+  playPunch: () => {},
+  playPaperTear: () => {},
 });
 
 export function SoundProvider({ children }: { children: React.ReactNode }) {
@@ -213,6 +221,138 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const playCrowdLaugh = () => {
+    if (!soundEnabled) return;
+    const ctx = getAudioContext();
+    if (!ctx) return;
+
+    try {
+      // Synthesize a textured crowd chuckle / laugh swell using multiple formant burst passes
+      const duration = 0.85;
+      const bufferSize = ctx.sampleRate * duration;
+      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        const t = i / ctx.sampleRate;
+        const burstEnv = Math.sin(t * 18) * 0.5 + 0.5; // laughter pulsating envelope
+        const overallEnv = Math.sin((t / duration) * Math.PI);
+        data[i] = (Math.random() * 2 - 1) * burstEnv * overallEnv;
+      }
+
+      const noise = ctx.createBufferSource();
+      noise.buffer = buffer;
+
+      const filter = ctx.createBiquadFilter();
+      filter.type = "bandpass";
+      filter.frequency.setValueAtTime(800, ctx.currentTime);
+      filter.frequency.linearRampToValueAtTime(1100, ctx.currentTime + 0.4);
+      filter.frequency.exponentialRampToValueAtTime(650, ctx.currentTime + duration);
+      filter.Q.value = 2.5;
+
+      const gain = ctx.createGain();
+      gain.gain.setValueAtTime(0.001, ctx.currentTime);
+      gain.gain.linearRampToValueAtTime(0.18, ctx.currentTime + 0.15);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+
+      noise.connect(filter);
+      filter.connect(gain);
+      gain.connect(ctx.destination);
+
+      noise.start();
+    } catch {
+      /* ignore */
+    }
+  };
+
+  const playMicClick = () => {
+    if (!soundEnabled) return;
+    const ctx = getAudioContext();
+    if (!ctx) return;
+
+    try {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(1800, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(120, ctx.currentTime + 0.035);
+
+      gain.gain.setValueAtTime(0.14, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.035);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start();
+      osc.stop(ctx.currentTime + 0.035);
+    } catch {
+      /* ignore */
+    }
+  };
+
+  const playPunch = () => {
+    if (!soundEnabled) return;
+    const ctx = getAudioContext();
+    if (!ctx) return;
+
+    try {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      osc.type = "triangle";
+      osc.frequency.setValueAtTime(240, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(42, ctx.currentTime + 0.18);
+
+      gain.gain.setValueAtTime(0.24, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.18);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start();
+      osc.stop(ctx.currentTime + 0.18);
+    } catch {
+      /* ignore */
+    }
+  };
+
+  const playPaperTear = () => {
+    if (!soundEnabled) return;
+    const ctx = getAudioContext();
+    if (!ctx) return;
+
+    try {
+      const duration = 0.22;
+      const bufferSize = ctx.sampleRate * duration;
+      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        data[i] = (Math.random() * 2 - 1) * Math.sin((i / bufferSize) * Math.PI);
+      }
+
+      const noise = ctx.createBufferSource();
+      noise.buffer = buffer;
+
+      const filter = ctx.createBiquadFilter();
+      filter.type = "bandpass";
+      filter.frequency.setValueAtTime(2200, ctx.currentTime);
+      filter.frequency.linearRampToValueAtTime(1400, ctx.currentTime + duration);
+      filter.Q.value = 4;
+
+      const gain = ctx.createGain();
+      gain.gain.setValueAtTime(0.12, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+
+      noise.connect(filter);
+      filter.connect(gain);
+      gain.connect(ctx.destination);
+
+      noise.start();
+    } catch {
+      /* ignore */
+    }
+  };
+
   return (
     <SoundContext.Provider
       value={{
@@ -223,6 +363,10 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
         playThud,
         playClick,
         playWhoosh,
+        playCrowdLaugh,
+        playMicClick,
+        playPunch,
+        playPaperTear,
       }}
     >
       {children}

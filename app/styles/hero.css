@@ -1,0 +1,781 @@
+/* ==========================================================================
+   SECTION 1: BILLBOARD HERO & PHYSICAL COLLAGE (hero.css)
+   ========================================================================== */
+/*  */
+.manifesto-hero-stage {
+  position: relative;
+  height: 560px;
+  min-height: 540px;
+  max-height: 600px;
+  background: var(--bg-pitch);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 0 1.5rem;
+}
+
+/* Colossal Billboard Typography Backdrop */
+.billboard-backdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem 2.5rem 2.2rem;
+  user-select: none;
+}
+
+.billboard-line-top {
+  font-family: var(--font-billboard);
+  font-size: clamp(3.8rem, 10.5vw, 10.5rem);
+  line-height: 0.82;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  white-space: nowrap;
+  opacity: 0.98;
+  margin-top: 0.4rem;
+}
+
+.billboard-line-bottom {
+  font-family: var(--font-billboard);
+  font-size: clamp(5.5rem, 17vw, 16.5rem);
+  line-height: 0.78;
+  letter-spacing: -0.025em;
+  color: #ffffff;
+  align-self: flex-end;
+  opacity: 0.98;
+  margin-right: 1.5rem;
+  margin-bottom: 2.2rem;
+}
+
+/* Centered Collage Cluster Container */
+.hero-stage-collage-wrap {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1480px;
+  height: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 1.5rem;
+}
+
+/* --------------------------------------------------------------------------
+   THE 5-LAYER OVERLAPPING PHYSICAL COLLAGE (HeroCollage.tsx)
+   -------------------------------------------------------------------------- */
+.hero-collage {
+  position: relative;
+  width: 100%;
+  max-width: 1440px;
+  height: 460px;
+  perspective: 1200px;
+}
+
+.collage-artifact {
+  position: absolute;
+  will-change: transform;
+  cursor: pointer;
+  transition: box-shadow 0.25s ease, filter 0.25s ease;
+}
+
+/* --- ARTIFACT 1: B&W STREET GIG FLYER (Far Left, Low) --- */
+.flyer-bw {
+  left: 1.5%;
+  top: 17%;
+  width: 185px;
+  background: #ffffff;
+  color: #000000;
+  border: 2px solid #000000;
+  padding: 0.75rem;
+  z-index: 3;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.75);
+}
+
+.flyer-bw:hover {
+  z-index: 12;
+  box-shadow: 0 30px 65px rgba(0, 0, 0, 0.95);
+  filter: contrast(110%);
+}
+
+.flyer-bw__header {
+  margin-bottom: 0.4rem;
+}
+
+.flyer-bw__title {
+  display: block;
+  font-family: var(--font-billboard);
+  font-size: 1.45rem;
+  line-height: 0.9;
+  letter-spacing: -0.01em;
+}
+
+.flyer-bw__sub {
+  display: block;
+  font-family: var(--font-billboard);
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  color: #333333;
+}
+
+.flyer-bw__badge {
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  font-weight: 700;
+  background: #000000;
+  color: #ffffff;
+  padding: 3px 5px;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.flyer-bw__image-wrap {
+  position: relative;
+  width: 100%;
+  height: 125px;
+  overflow: hidden;
+  background: #111111;
+  border: 1px solid #000000;
+  margin-bottom: 0.5rem;
+}
+
+.flyer-bw__image {
+  object-fit: cover;
+  filter: grayscale(100%) contrast(150%) brightness(95%);
+}
+
+.flyer-bw__footer {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  line-height: 1.25;
+  border-top: 1px dashed #000000;
+  padding-top: 0.4rem;
+}
+
+.flyer-bw__date {
+  font-weight: 700;
+}
+
+.flyer-bw__venue {
+  color: #555555;
+}
+
+/* Tape sticker on Flyer 1 */
+.tape-sticker {
+  font-family: var(--font-billboard);
+  position: absolute;
+  padding: 2px 8px;
+  font-size: 0.9rem;
+  line-height: 1;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.tape-sticker--neon {
+  background: var(--neon-lime);
+  color: #000000;
+}
+
+.tape-sticker--top-left {
+  top: -10px;
+  left: -8px;
+  transform: rotate(-8deg);
+  z-index: 6;
+}
+
+.tape-sticker--neon-right {
+  position: absolute;
+  left: 67%;
+  top: 58%;
+  background: var(--neon-lime);
+  color: #000000;
+  z-index: 7;
+}
+
+/* Barcode Sticker */
+.barcode-sticker {
+  background: #ffffff;
+  color: #000000;
+  padding: 3px 6px;
+  border: 1px solid #000000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+.barcode-sticker--left {
+  position: absolute;
+  left: -14px;
+  bottom: 20px;
+  transform: rotate(-90deg);
+  z-index: 7;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.barcode-sticker--left .barcode-svg {
+  width: 60px;
+  height: 16px;
+}
+
+.barcode-sticker--photo {
+  position: absolute;
+  right: -8px;
+  bottom: -12px;
+  transform: rotate(3deg);
+  z-index: 7;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3px 6px;
+}
+
+.barcode-sticker--photo .barcode-svg {
+  width: 70px;
+  height: 18px;
+}
+
+.barcode-number {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+}
+
+/* Silver textured duct tape */
+.tape-silver {
+  background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.25) 25%,
+      transparent 25%,
+      transparent 50%,
+      rgba(255, 255, 255, 0.25) 50%,
+      rgba(255, 255, 255, 0.25) 75%,
+      transparent 75%
+    ),
+    linear-gradient(to right, #9e9e9e, #bfbfbf, #9e9e9e);
+  background-size: 8px 8px, 100% 100%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.tape-silver--bottom {
+  position: absolute;
+  bottom: -10px;
+  right: 15px;
+  width: 80px;
+  height: 20px;
+  transform: rotate(-2deg);
+  z-index: 7;
+}
+
+.tape-silver--top {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%) rotate(1deg);
+  width: 90px;
+  height: 24px;
+  z-index: 7;
+}
+
+/* --- ARTIFACT 2: NEON ACID-LIME TOUR POSTER (Mid-Left, High) --- */
+.flyer-neon {
+  left: 13.5%;
+  top: 4%;
+  width: 175px;
+  background: var(--neon-lime);
+  color: #000000;
+  padding: 0.75rem;
+  z-index: 4;
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.flyer-neon:hover {
+  z-index: 13;
+  box-shadow: 0 30px 65px rgba(204, 255, 0, 0.35);
+  filter: brightness(1.05);
+}
+
+.flyer-neon__top-tag {
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.2rem;
+}
+
+.flyer-neon__brand {
+  font-family: var(--font-billboard);
+  font-size: 1.9rem;
+  line-height: 0.88;
+  letter-spacing: -0.01em;
+}
+
+.flyer-neon__burst-tag {
+  display: inline-block;
+  font-family: var(--font-billboard);
+  font-size: 0.85rem;
+  background: #000000;
+  color: var(--neon-lime);
+  padding: 2px 7px;
+  margin: 0.3rem 0 0.5rem;
+  transform: rotate(-2deg);
+}
+
+.flyer-neon__image-wrap {
+  position: relative;
+  width: 100%;
+  height: 125px;
+  overflow: hidden;
+  background: #000000;
+  margin-bottom: 0.5rem;
+}
+
+.flyer-neon__image {
+  object-fit: cover;
+  filter: grayscale(100%) contrast(160%) brightness(95%);
+}
+
+.flyer-neon__specs {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  font-weight: 700;
+  border-top: 1px solid rgba(0, 0, 0, 0.4);
+  padding-top: 0.35rem;
+}
+
+.tape-clear--top-right {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 50px;
+  height: 16px;
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(2px);
+  transform: rotate(35deg);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+/* --- ARTIFACT 3: WIRE-O DOUBLE-SPIRAL OPEN SKETCHBOOK (Centerpiece) --- */
+.wire-o-sketchbook {
+  left: 27%;
+  top: 2%;
+  width: 325px;
+  min-height: 420px;
+  height: 420px;
+  background: var(--paper-bone);
+  color: #111111;
+  z-index: 5;
+  border-radius: 4px;
+  box-shadow: 0 30px 65px rgba(0, 0, 0, 0.85);
+  border: 1px solid #dfdad0;
+  display: flex;
+  overflow: hidden;
+}
+
+.wire-o-sketchbook:hover {
+  z-index: 14;
+  box-shadow: 0 35px 75px rgba(0, 0, 0, 0.95);
+}
+
+/* Wire-o twin loops down the left edge */
+.wire-o-binding {
+  width: 34px;
+  background: #e6e1d6;
+  border-right: 1px solid #d4cebe;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 1rem 0;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+.wire-loop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.wire-hole {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #252422;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.wire-metal-ring {
+  width: 14px;
+  height: 5px;
+  border-radius: 3px;
+  background: linear-gradient(to right, #777, #eee, #777);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* Sketchbook Page Content */
+.sketchbook-page {
+  flex: 1;
+  padding: 1rem 1.15rem 0.75rem;
+  background: repeating-linear-gradient(
+    transparent,
+    transparent 26px,
+    #e8e2d5 27px
+  );
+  display: flex;
+  flex-direction: column;
+}
+
+.sketchbook-page__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.85rem;
+}
+
+.sketchbook-title-stamp {
+  font-family: var(--font-billboard);
+  font-size: 1.1rem;
+  background: #111111;
+  color: #ffffff;
+  padding: 2px 8px;
+  letter-spacing: 0.05em;
+  transform: rotate(-1.5deg);
+}
+
+.sketchbook-page__venue {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  color: #666666;
+}
+
+.sketchbook-routines-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 0.85rem;
+}
+
+.sketchbook-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: transparent;
+  border: none;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: #222222;
+  cursor: pointer;
+  text-align: left;
+  padding: 2px 4px;
+  border-radius: 2px;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.sketchbook-line:hover {
+  background: rgba(204, 255, 0, 0.4);
+  color: #000000;
+}
+
+.sketchbook-line--active {
+  background: #000000;
+  color: var(--neon-lime);
+}
+
+.sketchbook-line__title {
+  font-weight: 700;
+}
+
+.sketchbook-line__note {
+  font-size: 0.65rem;
+  color: #777777;
+}
+
+.sketchbook-line--active .sketchbook-line__note {
+  color: var(--neon-lime);
+}
+
+/* Handwritten margin annotations in Caveat */
+.sketchbook-annotation {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-handwritten);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  transform: rotate(-2deg);
+  margin-top: auto;
+  padding-top: 0.25rem;
+}
+
+.sketchbook-annotation__arrow {
+  width: 32px;
+  height: 20px;
+  color: #222222;
+}
+
+.sketchbook-annotation-bottom {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-handwritten);
+  font-size: 0.95rem;
+  color: #444444;
+  margin-top: 0.2rem;
+  border-top: 1px dashed #c8c2b5;
+  padding-top: 0.2rem;
+}
+
+.sketchbook-crossed {
+  text-decoration: line-through;
+  color: #888888;
+}
+
+/* --- ARTIFACT 4: CANDID 35MM STAGE PHOTO (Center-Right, Wide Shift) --- */
+.stage-photo {
+  left: 56%;
+  top: 9%;
+  width: 200px;
+  background: #111111;
+  border: 5px solid #ffffff;
+  padding: 0;
+  z-index: 6;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.9);
+}
+
+.stage-photo:hover {
+  z-index: 15;
+  box-shadow: 0 35px 80px rgba(0, 0, 0, 0.95);
+  filter: contrast(108%);
+}
+
+.stage-photo__frame {
+  position: relative;
+  width: 100%;
+  height: 260px;
+  overflow: hidden;
+  background: #000000;
+}
+
+.stage-photo__img-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.stage-photo__img {
+  object-fit: cover;
+  filter: grayscale(100%) contrast(140%) brightness(95%);
+}
+
+/* --- ARTIFACT 5: ANGLED NEON DUCT-TAPE BRAND --- */
+.tape-duct-brand {
+  position: absolute;
+  left: 66.5%;
+  top: 10%;
+  background: var(--neon-lime);
+  color: #000000;
+  padding: 5px 22px;
+  font-family: var(--font-billboard);
+  font-size: 1.55rem;
+  line-height: 1;
+  letter-spacing: 0.05em;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
+  cursor: pointer;
+  z-index: 25;
+  transition: transform 0.2s ease;
+}
+
+.tape-duct-brand:hover {
+  transform: rotate(-6deg) scale(1.05) !important;
+}
+
+/* --- ARTIFACT 6: STICKY NOTE 1 (Yellow Post-It Punchline) --- */
+.sticky-note-yellow {
+  left: 47%;
+  top: 65%;
+  width: 152px;
+  background: #fff36d;
+  color: #111111;
+  padding: 0.65rem 0.8rem 0.6rem;
+  z-index: 9;
+  border-radius: 2px;
+  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.75), 0 2px 6px rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+  transform-origin: top center;
+  border-top: 3px solid rgba(255, 255, 255, 0.45);
+  position: absolute;
+  will-change: transform;
+}
+
+.sticky-note-yellow:hover {
+  z-index: 18;
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.85), 0 0 20px rgba(255, 243, 109, 0.4);
+}
+
+.sticky-note-pin {
+  width: 32px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(2px);
+  margin: -0.85rem auto 0.35rem;
+  border-radius: 1px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.sticky-note-yellow__tag {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  font-weight: 700;
+  color: #666644;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.2rem;
+}
+
+.sticky-note-yellow__text {
+  font-family: var(--font-handwritten);
+  font-size: 1.15rem;
+  line-height: 1.15;
+  font-weight: 700;
+  color: #1a1a14;
+  margin: 0 0 0.25rem 0;
+}
+
+.sticky-note-yellow__sub {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.48rem;
+  font-weight: 700;
+  color: #777755;
+  letter-spacing: 0.04em;
+}
+
+/* --- ARTIFACT 7: STICKY NOTE 2 (Hot Pink Hotel Room Memo) --- */
+.sticky-note-pink {
+  left: 74%;
+  top: 24%;
+  width: 165px;
+  background: #ff2a6d;
+  color: #ffffff;
+  padding: 0.75rem 0.85rem 0.65rem;
+  z-index: 7;
+  border-radius: 2px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.75), 0 0 25px rgba(255, 42, 109, 0.25);
+  cursor: pointer;
+  transform-origin: top left;
+  position: absolute;
+  will-change: transform;
+}
+
+.sticky-note-pink:hover {
+  z-index: 19;
+  box-shadow: 0 26px 55px rgba(0, 0, 0, 0.85), 0 0 30px rgba(255, 42, 109, 0.45);
+}
+
+.sticky-note-tape-pink {
+  position: absolute;
+  top: -8px;
+  left: 20px;
+  width: 45px;
+  height: 16px;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(2px);
+  transform: rotate(-5deg);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.sticky-note-pink__header {
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  background: #000000;
+  color: #ffffff;
+  padding: 2px 4px;
+  display: inline-block;
+  margin-bottom: 0.35rem;
+}
+
+.sticky-note-pink__text {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  line-height: 1.35;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 0.3rem 0;
+}
+
+.sticky-note-pink__sign {
+  display: block;
+  font-family: var(--font-handwritten);
+  font-size: 1.15rem;
+  color: #ffccd5;
+  text-align: right;
+}
+
+/* Floating Interactive Toast Stamp */
+.hero-easter-toast {
+  position: absolute;
+  z-index: 30;
+  background: #000000;
+  color: var(--neon-lime);
+  border: 1px solid var(--neon-lime);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  box-shadow: 0 8px 24px rgba(204, 255, 0, 0.4);
+  pointer-events: none;
+  animation: toastPop 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes toastPop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 10px) scale(0.9);
+  }
+  15% {
+    opacity: 1;
+    transform: translate(-50%, -10px) scale(1.05);
+  }
+  80% {
+    opacity: 1;
+    transform: translate(-50%, -20px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -30px) scale(0.95);
+  }
+}
+
+
+/* --- HERO RESPONSIVE --- */
+@media (max-width: 1024px) {
+  .hero-collage {
+    transform: scale(0.85);
+    transform-origin: center center;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-collage {
+    transform: scale(0.68);
+    transform-origin: center center;
+  }
+  .billboard-line-top {
+    font-size: clamp(3rem, 11vw, 5rem);
+  }
+  .billboard-line-bottom {
+    font-size: clamp(4.5rem, 16vw, 8rem);
+  }
+}

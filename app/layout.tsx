@@ -2,31 +2,31 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Jimmy Oye — Same Shit. Different People. | Living Comedy Showroom",
+  title: "Jimmy Oye — Same Shit. Different People. | The Raw Setlist Manifesto",
   description:
-    "Walk up to the wall. Pull a bit. Feel the room. Jimmy Oye’s signature stand-up comedy bits as an interactive living showroom — watch, get tickets, or book a show.",
+    "Jimmy Oye's live stand-up comedy special & bit archive — 21 uncensored routines, live tour dates, and booking dispatch.",
   keywords: [
     "Jimmy Oye",
     "Stand-up Comedy",
     "Indian Comedy",
+    "Same Shit Different People",
     "Chandigarh",
     "Mohali",
-    "Bit Poster Wall",
     "Comedy Tour Dates",
     "Book Comedian",
   ],
   authors: [{ name: "Jimmy Oye" }],
   openGraph: {
-    title: "Jimmy Oye — Same Shit. Different People.",
+    title: "Jimmy Oye — Same Shit. Different People. | The Raw Setlist Manifesto",
     description:
-      "Walk up to the wall. Pull a bit. Feel the room. Jimmy Oye's signature comedy bits as an interactive showroom.",
-    siteName: "Jimmy Oye Comedy Showroom",
+      "Jimmy Oye's signature stand-up routines, live tour dates, and booking dispatch.",
+    siteName: "Jimmy Oye Comedy Showcase",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "Jimmy Oye — Same Shit. Different People.",
-    description: "Walk up to the wall. Pull a bit. Feel the room.",
+    description: "21 live comedy routines, tour dates, and booking dispatch.",
   },
   icons: {
     icon: "/icon.svg",
@@ -53,7 +53,7 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Figtree:wght@400;500;600;700;800&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Caveat:wght@600;700&family=Figtree:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@700;800;900&display=swap"
           rel="stylesheet"
         />
       </head>

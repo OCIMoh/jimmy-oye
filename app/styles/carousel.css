@@ -426,7 +426,6 @@ button.zine-poster-card--neon,
   align-items: center;
   justify-content: center;
   padding: 1.5rem;
-  animation: modalOverlayFade 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .poster-modal-backdrop {
@@ -449,7 +448,6 @@ button.zine-poster-card--neon,
   box-shadow: 0 25px 80px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(255, 255, 255, 0.08);
   border-radius: 4px;
   overflow: hidden;
-  animation: modalPanelPop 0.26s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .poster-panel__left {
@@ -890,5 +888,41 @@ button.zine-poster-card--neon,
   }
   .receipt-ticket__schedule {
     text-align: left;
+  }
+}
+
+@media (max-width: 480px) {
+  .poster-modal-overlay {
+    padding: 0.5rem;
+  }
+  .poster-modal-panel {
+    max-height: 94vh;
+    border-radius: 6px;
+  }
+  .poster-panel__artwork-frame {
+    height: 200px;
+    max-width: 170px;
+  }
+  .poster-panel__right {
+    padding: 1rem 0.85rem;
+  }
+  .poster-panel__title {
+    font-size: 1.55rem;
+    line-height: 1.1;
+  }
+  .poster-panel__step-btn {
+    padding: 4px 8px;
+    font-size: 0.65rem;
+  }
+  .poster-panel__step-count {
+    font-size: 0.6rem;
+  }
+  .poster-panel__meta-grid {
+    grid-template-columns: 1fr;
+    gap: 0.4rem;
+  }
+  .poster-panel__ig-btn {
+    padding: 0.75rem 1rem;
+    font-size: 0.8rem;
   }
 }

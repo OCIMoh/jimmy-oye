@@ -768,14 +768,41 @@
 }
 
 @media (max-width: 768px) {
+  .manifesto-hero-stage {
+    height: 520px;
+    min-height: 480px;
+  }
   .hero-collage {
     transform: scale(0.68);
     transform-origin: center center;
   }
   .billboard-line-top {
-    font-size: clamp(3rem, 11vw, 5rem);
+    font-size: clamp(2.4rem, 10vw, 4.2rem);
   }
   .billboard-line-bottom {
-    font-size: clamp(4.5rem, 16vw, 8rem);
+    font-size: clamp(3.6rem, 15vw, 6.8rem);
+    margin-right: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .manifesto-hero-stage {
+    height: 460px;
+    min-height: 430px;
+    padding: 0;
+  }
+  .hero-collage {
+    transform: scale(0.55);
+    transform-origin: center center;
+  }
+  .billboard-backdrop {
+    padding: 0.6rem 0.85rem 0.85rem;
+  }
+  .billboard-line-top {
+    font-size: clamp(2rem, 9.5vw, 3rem);
+  }
+  .billboard-line-bottom {
+    font-size: clamp(3rem, 14vw, 4.8rem);
+    margin-right: 0;
   }
 }

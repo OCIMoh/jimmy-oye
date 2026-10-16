@@ -259,7 +259,54 @@
 
 /* --- NAV RESPONSIVE --- */
 @media (max-width: 768px) {
+  .manifesto-nav {
+    padding: 0.85rem 1.25rem;
+  }
+
+  .manifesto-nav__center-brand {
+    font-size: 1.35rem;
+  }
+
   .manifesto-nav__left a {
     display: none;
+  }
+
+  .manifesto-nav__pill-btn {
+    padding: 0.4rem 0.95rem;
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .manifesto-nav {
+    padding: 0.75rem 0.9rem;
+  }
+
+  .manifesto-nav__left {
+    gap: 0.5rem;
+  }
+
+  .nav-mono-tag {
+    font-size: 0.68rem;
+    padding: 2px 5px;
+  }
+
+  .manifesto-nav__center-brand {
+    font-size: 1.18rem;
+    letter-spacing: 0.03em;
+  }
+
+  .manifesto-nav__right {
+    gap: 0.5rem;
+  }
+
+  /* On narrow phone screens, hide secondary tour text link so primary Get Tickets pill fits cleanly */
+  .manifesto-nav__right .nav-mono-link {
+    display: none;
+  }
+
+  .manifesto-nav__pill-btn {
+    padding: 0.38rem 0.8rem;
+    font-size: 0.68rem;
   }
 }

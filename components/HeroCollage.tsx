@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import gsap from "gsap";
+import { motion } from "motion/react";
 import { useSound } from "@/components/SoundSystem";
 
 interface HeroCollageProps {
@@ -23,6 +24,12 @@ export default function HeroCollage({ onSelectBit }: HeroCollageProps) {
   const tapeShitRef = useRef<HTMLDivElement>(null);
   const stickyYellowRef = useRef<HTMLDivElement>(null);
   const stickyPinkRef = useRef<HTMLDivElement>(null);
+  const collageContainerRef = useRef<HTMLDivElement>(null);
+
+  const isDraggingYellow = useRef(false);
+  const isDraggingPink = useRef(false);
+  const isDraggingShit = useRef(false);
+  const isDraggingBrand = useRef(false);
 
   const pointerPos = useRef({ x: 0, y: 0 });
   const currentPos = useRef({ x: 0, y: 0 });
@@ -127,31 +134,31 @@ export default function HeroCollage({ onSelectBit }: HeroCollageProps) {
         stagePhotoRef.current.style.transform = `translate3d(${tx}px, ${ty}px, 0) rotate(${rot}deg)`;
       }
 
-      // 5. Tape & Decals (Following stage photo)
-      if (tapeBrandRef.current) {
+      // 5. Tape & Decals (Following stage photo when not being manually dragged)
+      if (tapeBrandRef.current && !isDraggingBrand.current) {
         const tx = cx * 26 * sf;
         const ty = cy * -20 * sf + floatPhotoY;
         const rot = -8.5 + cx * 2.0 * sf;
         tapeBrandRef.current.style.transform = `translate3d(${tx}px, ${ty}px, 0) rotate(${rot}deg)`;
       }
 
-      if (tapeShitRef.current) {
+      if (tapeShitRef.current && !isDraggingShit.current) {
         const tx = cx * 26 * sf;
         const ty = cy * -20 * sf + floatPhotoY;
         const rot = 4.5 + cx * 1.5 * sf;
         tapeShitRef.current.style.transform = `translate3d(${tx}px, ${ty}px, 0) rotate(${rot}deg)`;
       }
 
-      // 6. Artifact 6: Sticky Note 1 (Yellow Post-It - Center-Bottom Stagger)
-      if (stickyYellowRef.current) {
+      // 6. Artifact 6: Sticky Note 1 (Yellow Post-It - Center-Bottom Stagger when not dragged)
+      if (stickyYellowRef.current && !isDraggingYellow.current) {
         const tx = cx * 16 * sf;
         const ty = cy * 12 * sf + floatYellowY;
         const rot = 6.5 + cx * 2.5 * sf;
         stickyYellowRef.current.style.transform = `translate3d(${tx}px, ${ty}px, 0) rotate(${rot}deg)`;
       }
 
-      // 7. Artifact 7: Sticky Note 2 (Hot Pink Hotel Memo - Wide Right Bridge)
-      if (stickyPinkRef.current) {
+      // 7. Artifact 7: Sticky Note 2 (Hot Pink Hotel Memo - Wide Right Bridge when not dragged)
+      if (stickyPinkRef.current && !isDraggingPink.current) {
         const tx = cx * 34 * sf;
         const ty = cy * -24 * sf + floatPinkY;
         const rot = -5.0 + cx * 3.0 * sf;
@@ -215,7 +222,11 @@ export default function HeroCollage({ onSelectBit }: HeroCollageProps) {
   };
 
   return (
-    <div className="hero-collage" aria-label="Jimmy Oye Stage Collage and Raw Setlist">
+    <div
+      ref={collageContainerRef}
+      className="hero-collage"
+      aria-label="Jimmy Oye Stage Collage and Raw Setlist"
+    >
       {/* Floating Interactive Easter Egg Toast */}
       {toastMessage && (
         <div
@@ -381,11 +392,26 @@ export default function HeroCollage({ onSelectBit }: HeroCollageProps) {
       </div>
 
       {/* -------------------------------------------------------------
-          ARTIFACT 6: STICKY NOTE 1 (Yellow Post-It Punchline - Center Bottom)
+          ARTIFACT 6: STICKY NOTE 1 (Yellow Post-It Punchline - Draggable Spring Physics)
       -------------------------------------------------------------- */}
-      <div
+      <motion.div
         ref={stickyYellowRef}
         className="sticky-note-yellow"
+        drag
+        dragConstraints={collageContainerRef}
+        dragElastic={0.25}
+        whileDrag={{
+          scale: 1.15,
+          zIndex: 100,
+          rotate: 10,
+          cursor: "grabbing",
+          boxShadow: "0 25px 50px rgba(0, 0, 0, 0.75)",
+        }}
+        whileHover={{ scale: 1.05, cursor: "grab" }}
+        onDragStart={() => {
+          isDraggingYellow.current = true;
+          playTapeRip();
+        }}
         onClick={() =>
           handleStickyClick(
             stickyYellowRef,
@@ -393,16 +419,16 @@ export default function HeroCollage({ onSelectBit }: HeroCollageProps) {
             playTapeRip
           )
         }
-        title="Click to hear punchline note"
+        title="⚡ Drag me around or click to fire joke"
         data-cursor="punch"
       >
         <div className="sticky-note-pin" />
-        <span className="sticky-note-yellow__tag">JOKE NOTE #01</span>
+        <span className="sticky-note-yellow__tag">JOKE NOTE #01 • DRAGGABLE</span>
         <p className="sticky-note-yellow__text">
           Maine Google Map khola... saara RED tha bhai!
         </p>
-        <span className="sticky-note-yellow__sub">TAP TO FIRE →</span>
-      </div>
+        <span className="sticky-note-yellow__sub">TAP TO FIRE / DRAG →</span>
+      </motion.div>
 
       {/* -------------------------------------------------------------
           ARTIFACT 4: CANDID 35MM FILM STAGE PHOTOGRAPH (Right, Wide Shift)
@@ -451,31 +477,65 @@ export default function HeroCollage({ onSelectBit }: HeroCollageProps) {
       </div>
 
       {/* -------------------------------------------------------------
-          ARTIFACT 5: DECALS & TAPE
+          ARTIFACT 5: DECALS & TAPE (Draggable Stage Props)
       -------------------------------------------------------------- */}
-      <div
+      <motion.div
         ref={tapeShitRef}
         className="tape-sticker tape-sticker--neon-right"
+        drag
+        dragConstraints={collageContainerRef}
+        dragElastic={0.25}
+        whileDrag={{ scale: 1.22, zIndex: 110, rotate: 12, cursor: "grabbing" }}
+        whileHover={{ scale: 1.08, cursor: "grab" }}
+        onDragStart={() => {
+          isDraggingShit.current = true;
+          playClick();
+        }}
         onClick={() => handleCardClick(tapeShitRef, playClick)}
+        title="Drag tape decal"
       >
         SHIT.
-      </div>
+      </motion.div>
 
-      <div
+      <motion.div
         ref={tapeBrandRef}
         className="tape-duct-brand"
+        drag
+        dragConstraints={collageContainerRef}
+        dragElastic={0.25}
+        whileDrag={{ scale: 1.18, zIndex: 110, rotate: -10, cursor: "grabbing" }}
+        whileHover={{ scale: 1.08, cursor: "grab" }}
+        onDragStart={() => {
+          isDraggingBrand.current = true;
+          playMicClick();
+        }}
         onClick={() => handleCardClick(tapeBrandRef, playMicClick)}
-        title="Jimmy Oye"
+        title="Jimmy Oye • Drag tape label"
       >
         <span className="tape-duct-brand__text">JIMMY OYE</span>
-      </div>
+      </motion.div>
 
       {/* -------------------------------------------------------------
-          ARTIFACT 7: STICKY NOTE 2 (Hot Pink Hotel Room Memo - Wide Bridge)
+          ARTIFACT 7: STICKY NOTE 2 (Hot Pink Hotel Room Memo - Draggable Spring Physics)
       -------------------------------------------------------------- */}
-      <div
+      <motion.div
         ref={stickyPinkRef}
         className="sticky-note-pink"
+        drag
+        dragConstraints={collageContainerRef}
+        dragElastic={0.25}
+        whileDrag={{
+          scale: 1.15,
+          zIndex: 100,
+          rotate: -8,
+          cursor: "grabbing",
+          boxShadow: "0 25px 50px rgba(0, 0, 0, 0.75)",
+        }}
+        whileHover={{ scale: 1.05, cursor: "grab" }}
+        onDragStart={() => {
+          isDraggingPink.current = true;
+          playTapeRip();
+        }}
         onClick={() =>
           handleStickyClick(
             stickyPinkRef,
@@ -483,16 +543,16 @@ export default function HeroCollage({ onSelectBit }: HeroCollageProps) {
             playClick
           )
         }
-        title="Backstage Greenroom Note"
+        title="⚡ Drag me around or click backstage memo"
         data-cursor="punch"
       >
         <div className="sticky-note-tape-pink" />
-        <span className="sticky-note-pink__header">ROOM 402 MEMO</span>
+        <span className="sticky-note-pink__header">ROOM 402 MEMO • DRAGGABLE</span>
         <p className="sticky-note-pink__text">
           Tonight: 8:00 PM Sharp. No laptops allowed. Only pure crowd work!
         </p>
         <span className="sticky-note-pink__sign">~ Jimmy Oye</span>
-      </div>
+      </motion.div>
     </div>
   );
 }

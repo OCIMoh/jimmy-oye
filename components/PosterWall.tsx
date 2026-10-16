@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { motion, AnimatePresence } from "motion/react";
 import bitsData from "@/data/bits.json";
 import WallCarousel, { CarouselBit } from "@/components/WallCarousel";
 import HeroCollage from "@/components/HeroCollage";
@@ -55,6 +56,23 @@ export default function PosterWall() {
         .to(spotlight, { opacity: 1, scale: 1, duration: 0.5, ease: "power2.out" });
     }
 
+    // GSAP ScrollTrigger cinematic parallax on billboard text
+    const ctx = gsap.context(() => {
+      if (heroRef.current) {
+        gsap.to(".billboard-backdrop", {
+          yPercent: 30,
+          opacity: 0.25,
+          ease: "none",
+          scrollTrigger: {
+            trigger: heroRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: 0.5,
+          },
+        });
+      }
+    });
+
     const handlePointerMove = (e: MouseEvent) => {
       if (!spotlight) return;
       const x = (e.clientX / window.innerWidth) * 100;
@@ -64,7 +82,11 @@ export default function PosterWall() {
     };
 
     window.addEventListener("pointermove", handlePointerMove, { passive: true });
-    return () => window.removeEventListener("pointermove", handlePointerMove);
+
+    return () => {
+      ctx.revert();
+      window.removeEventListener("pointermove", handlePointerMove);
+    };
   }, []);
 
   // Modal open/close helpers
@@ -257,151 +279,185 @@ export default function PosterWall() {
       <BookingDispatch instagramUrl={bitsData.instagram} />
 
       {/* -------------------------------------------------------------
-          MODAL INSPECTION DRAWER (For deep reel inspection)
+          MODAL INSPECTION DRAWER (Spring Physics & AnimatePresence Exit)
       -------------------------------------------------------------- */}
-      {active && (
-        <div
-          className="poster-modal-overlay"
-          ref={overlayRef}
-          onClick={(e) => {
-            if (e.target === overlayRef.current) closeModal();
-          }}
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="modal-bit-title"
-        >
-          <div className="poster-modal-backdrop" aria-hidden="true" />
+      <AnimatePresence>
+        {active && (
+          <motion.div
+            key="poster-modal-overlay"
+            className="poster-modal-overlay"
+            ref={overlayRef}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.22, ease: "easeOut" }}
+            onClick={(e) => {
+              if (e.target === overlayRef.current) closeModal();
+            }}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-bit-title"
+          >
+            <motion.div
+              className="poster-modal-backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              aria-hidden="true"
+            />
 
-          <div className="poster-modal-panel" ref={panelRef}>
-            <div className="poster-panel__left">
-              <div className="poster-panel__artwork-frame">
-                {/* Physical flyer tape accents */}
-                <div className="poster-panel__tape poster-panel__tape--tl" aria-hidden="true" />
-                <div className="poster-panel__tape poster-panel__tape--tr" aria-hidden="true" />
+            <motion.div
+              key={active.id}
+              className="poster-modal-panel"
+              ref={panelRef}
+              initial={{ opacity: 0, scale: 0.92, y: 32, rotate: -0.6 }}
+              animate={{ opacity: 1, scale: 1, y: 0, rotate: 0 }}
+              exit={{ opacity: 0, scale: 0.94, y: 20, transition: { duration: 0.18, ease: "easeIn" } }}
+              transition={{ type: "spring", damping: 26, stiffness: 320 }}
+            >
+              <div className="poster-panel__left">
+                <div className="poster-panel__artwork-frame">
+                  {/* Physical flyer tape accents */}
+                  <div className="poster-panel__tape poster-panel__tape--tl" aria-hidden="true" />
+                  <div className="poster-panel__tape poster-panel__tape--tr" aria-hidden="true" />
 
-                <img
-                  src={`${active.cover}?${CACHE_BUST}`}
-                  alt={active.title}
-                  className="poster-panel__img"
-                />
+                  <img
+                    src={`${active.cover}?${CACHE_BUST}`}
+                    alt={active.title}
+                    className="poster-panel__img"
+                  />
 
-                <span className="poster-panel__tag-stamp">
-                  #{String(currentBitIndex + 1).padStart(2, "0")}
-                </span>
-
-                <div className="poster-panel__artwork-hint" aria-hidden="true">
-                  <span>HOVER TO REVEAL COLOR</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="poster-panel__right">
-              {/* Stepper Navigation Deck & Dedicated Close Button */}
-              <div className="poster-panel__nav">
-                <div className="poster-panel__stepper">
-                  <button
-                    type="button"
-                    className="poster-panel__step-btn"
-                    onClick={handlePrevBit}
-                    title="Previous Routine (Left Arrow)"
-                  >
-                    ← PREV
-                  </button>
-                  <span className="poster-panel__step-count">
-                    SETLIST {String(currentBitIndex + 1).padStart(2, "0")} / {String(bitsData.bits.length).padStart(2, "0")}
+                  <span className="poster-panel__tag-stamp">
+                    #{String(currentBitIndex + 1).padStart(2, "0")}
                   </span>
-                  <button
+
+                  <div className="poster-panel__artwork-hint" aria-hidden="true">
+                    <span>HOVER TO REVEAL COLOR</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="poster-panel__right">
+                {/* Stepper Navigation Deck & Dedicated Close Button */}
+                <div className="poster-panel__nav">
+                  <div className="poster-panel__stepper">
+                    <motion.button
+                      type="button"
+                      className="poster-panel__step-btn"
+                      onClick={handlePrevBit}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.94 }}
+                      title="Previous Routine (Left Arrow)"
+                    >
+                      ← PREV
+                    </motion.button>
+                    <span className="poster-panel__step-count">
+                      SETLIST {String(currentBitIndex + 1).padStart(2, "0")} / {String(bitsData.bits.length).padStart(2, "0")}
+                    </span>
+                    <motion.button
+                      type="button"
+                      className="poster-panel__step-btn"
+                      onClick={handleNextBit}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.94 }}
+                      title="Next Routine (Right Arrow)"
+                    >
+                      NEXT →
+                    </motion.button>
+                  </div>
+
+                  <motion.button
                     type="button"
-                    className="poster-panel__step-btn"
-                    onClick={handleNextBit}
-                    title="Next Routine (Right Arrow)"
+                    className="poster-panel__close-btn"
+                    onClick={closeModal}
+                    whileHover={{ scale: 1.1, rotate: 90 }}
+                    whileTap={{ scale: 0.9 }}
+                    aria-label="Close modal"
                   >
-                    NEXT →
-                  </button>
+                    <span className="poster-panel__close-esc">ESC</span>
+                    <span className="poster-panel__close-icon">✕</span>
+                  </motion.button>
                 </div>
 
-                <button
-                  type="button"
-                  className="poster-panel__close-btn"
-                  onClick={closeModal}
-                  aria-label="Close modal"
-                >
-                  <span className="poster-panel__close-esc">ESC</span>
-                  <span className="poster-panel__close-icon">✕</span>
-                </button>
-              </div>
-
-              {/* Bit Title & Subtitle Badge */}
-              <div className="poster-panel__header-group">
-                <span className="poster-panel__badge">
-                  {active.subtitle ? active.subtitle.toUpperCase() : "VIRAL BIT"} &bull; LIVE ROUTINE
-                </span>
-                <h3 id="modal-bit-title" className="poster-panel__title">
-                  {active.title}
-                </h3>
-              </div>
-
-              <p className="poster-panel__note">{active.note}</p>
-
-              {/* Crowd Intel & Routine Stats Grid (Fills dead space) */}
-              <div className="poster-panel__meta-grid">
-                <div className="poster-panel__meta-item">
-                  <span className="poster-panel__meta-label">ROOM VIBE</span>
-                  <span className="poster-panel__meta-val">⚡ Unfiltered / Raw</span>
+                {/* Bit Title & Subtitle Badge */}
+                <div className="poster-panel__header-group">
+                  <span className="poster-panel__badge">
+                    {active.subtitle ? active.subtitle.toUpperCase() : "VIRAL BIT"} &bull; LIVE ROUTINE
+                  </span>
+                  <h3 id="modal-bit-title" className="poster-panel__title">
+                    {active.title}
+                  </h3>
                 </div>
-                <div className="poster-panel__meta-item">
-                  <span className="poster-panel__meta-label">RECORDING</span>
-                  <span className="poster-panel__meta-val">📍 Live Club Cut</span>
-                </div>
-                <div className="poster-panel__meta-item">
-                  <span className="poster-panel__meta-label">CATEGORY</span>
-                  <span className="poster-panel__meta-val">🏷️ #{active.subtitle ? active.subtitle.replace(/\s+/g, '') : "StandupComedy"}</span>
-                </div>
-              </div>
 
-              {/* Action Buttons: Primary Hero CTA + Secondary Split Row */}
-              <div className="poster-panel__actions">
-                <a
-                  className="poster-panel__ig-btn"
-                  href={active.instagramUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  data-cursor="view"
-                >
-                  <span className="poster-panel__ig-icon">▶</span>
-                  <span>Watch Reel on Instagram</span>
-                  <span className="poster-panel__arrow">↗</span>
-                </a>
+                <p className="poster-panel__note">{active.note}</p>
 
-                <div className="poster-panel__secondary-actions">
-                  <a
-                    className="poster-panel__ticket-btn"
-                    href={bitsData.ticketsUrl}
+                {/* Crowd Intel & Routine Stats Grid (Fills dead space) */}
+                <div className="poster-panel__meta-grid">
+                  <div className="poster-panel__meta-item">
+                    <span className="poster-panel__meta-label">ROOM VIBE</span>
+                    <span className="poster-panel__meta-val">⚡ Unfiltered / Raw</span>
+                  </div>
+                  <div className="poster-panel__meta-item">
+                    <span className="poster-panel__meta-label">RECORDING</span>
+                    <span className="poster-panel__meta-val">📍 Live Club Cut</span>
+                  </div>
+                  <div className="poster-panel__meta-item">
+                    <span className="poster-panel__meta-label">CATEGORY</span>
+                    <span className="poster-panel__meta-val">🏷️ #{active.subtitle ? active.subtitle.replace(/\s+/g, '') : "StandupComedy"}</span>
+                  </div>
+                </div>
+
+                {/* Action Buttons: Primary Hero CTA + Secondary Split Row */}
+                <div className="poster-panel__actions">
+                  <motion.a
+                    className="poster-panel__ig-btn"
+                    href={active.instagramUrl}
                     target="_blank"
                     rel="noreferrer"
-                    onClick={() => playClick()}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.97 }}
+                    data-cursor="view"
                   >
-                    🎟️ Get Tour Tickets
-                  </a>
+                    <span className="poster-panel__ig-icon">▶</span>
+                    <span>Watch Reel on Instagram</span>
+                    <span className="poster-panel__arrow">↗</span>
+                  </motion.a>
 
-                  <button
-                    type="button"
-                    className="poster-panel__share-btn"
-                    onClick={handleShareBit}
-                  >
-                    {copiedLink ? "✓ Link Copied!" : "🔗 Share Bit"}
-                  </button>
+                  <div className="poster-panel__secondary-actions">
+                    <motion.a
+                      className="poster-panel__ticket-btn"
+                      href={bitsData.ticketsUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.96 }}
+                      onClick={() => playClick()}
+                    >
+                      🎟️ Get Tour Tickets
+                    </motion.a>
+
+                    <motion.button
+                      type="button"
+                      className="poster-panel__share-btn"
+                      onClick={handleShareBit}
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.96 }}
+                    >
+                      {copiedLink ? "✓ Link Copied!" : "🔗 Share Bit"}
+                    </motion.button>
+                  </div>
+                </div>
+
+                {/* Hotkey Helper Bar */}
+                <div className="poster-panel__hotkey-bar" aria-hidden="true">
+                  <span>⌨️ USE ARROW KEYS [←] [→] TO FLIP &bull; [ESC] TO CLOSE</span>
                 </div>
               </div>
-
-              {/* Hotkey Helper Bar */}
-              <div className="poster-panel__hotkey-bar" aria-hidden="true">
-                <span>⌨️ USE ARROW KEYS [←] [→] TO FLIP &bull; [ESC] TO CLOSE</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

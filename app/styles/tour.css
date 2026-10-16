@@ -798,3 +798,24 @@
     padding: 8px 12px;
   }
 }
+
+@media (max-width: 480px) {
+  .thermal-roll-paper {
+    padding: 20px 12px 24px;
+  }
+  .receipt-sawtooth-top {
+    margin: -20px -12px 14px;
+  }
+  .receipt-sawtooth-bottom {
+    margin: 14px -12px -24px;
+  }
+  .roll-header__title {
+    font-size: 1.7rem;
+  }
+  .pos-tour-radar-card {
+    padding: 1rem;
+  }
+  .radar-countdown-grid {
+    gap: 0.6rem;
+  }
+}

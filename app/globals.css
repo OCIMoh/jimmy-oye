@@ -20,6 +20,9 @@
 /* 5. Section 3: The Craft ("HOW A JOKE GETS BORN") & Voice Memo Clipboard */
 @import "./styles/craft.css";
 
+/* 5b. Section 3b: Stories Showcase (YouTube Video Wall) */
+@import "./styles/stories.css";
+
 /* 6. Section 4: Tour Schedule & Continuous Thermal Receipt Roll */
 @import "./styles/tour.css";
 

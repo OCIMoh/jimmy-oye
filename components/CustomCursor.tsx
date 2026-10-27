@@ -34,9 +34,14 @@ export default function CustomCursor() {
       }
 
       // Check context
-      const target = (e.target as HTMLElement)?.closest("[data-cursor], a, button, .poster");
+      const target = (e.target as HTMLElement)?.closest("[data-cursor], a, button, .poster, iframe");
       if (target) {
         const cursorAttr = target.getAttribute("data-cursor");
+        if (cursorAttr === "hidden" || target.tagName.toLowerCase() === "iframe") {
+          setCursorMode("hidden");
+          setCursorText("");
+          return;
+        }
         if (cursorAttr) {
           if (cursorAttr === "pull") {
             setCursorMode("badge");
@@ -72,6 +77,23 @@ export default function CustomCursor() {
       setCursorMode("default");
     };
 
+    const onWindowBlur = () => {
+      // Hide cursor when window loses focus (e.g., clicking inside a cross-origin iframe)
+      setCursorMode("hidden");
+    };
+
+    const onWindowFocus = () => {
+      setCursorMode("default");
+    };
+
+    const onCustomCursorEvent = (e: Event) => {
+      const customEvent = e as CustomEvent<{ mode: "default" | "pointer" | "badge" | "hidden"; text?: string }>;
+      if (customEvent.detail?.mode) {
+        setCursorMode(customEvent.detail.mode);
+        setCursorText(customEvent.detail.text || "");
+      }
+    };
+
     // Smooth lerp loop for the trailing ring
     const render = () => {
       const lerp = 0.16;
@@ -88,12 +110,18 @@ export default function CustomCursor() {
     window.addEventListener("mousemove", onMouseMove, { passive: true });
     document.addEventListener("mouseleave", onMouseLeave);
     document.addEventListener("mouseenter", onMouseEnter);
+    window.addEventListener("blur", onWindowBlur);
+    window.addEventListener("focus", onWindowFocus);
+    window.addEventListener("custom-cursor", onCustomCursorEvent);
     rafId = requestAnimationFrame(render);
 
     return () => {
       window.removeEventListener("mousemove", onMouseMove);
       document.removeEventListener("mouseleave", onMouseLeave);
       document.removeEventListener("mouseenter", onMouseEnter);
+      window.removeEventListener("blur", onWindowBlur);
+      window.removeEventListener("focus", onWindowFocus);
+      window.removeEventListener("custom-cursor", onCustomCursorEvent);
       cancelAnimationFrame(rafId);
     };
   }, []);

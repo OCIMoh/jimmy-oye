@@ -8,6 +8,7 @@ import bitsData from "@/data/bits.json";
 import WallCarousel, { CarouselBit } from "@/components/WallCarousel";
 import HeroCollage from "@/components/HeroCollage";
 import CraftManifesto from "@/components/CraftManifesto";
+import StoriesShowcase from "@/components/StoriesShowcase";
 import ThermalReceiptTour from "@/components/ThermalReceiptTour";
 import BookingDispatch from "@/components/BookingDispatch";
 import VelocityMarquee from "@/components/VelocityMarquee";
@@ -199,6 +200,7 @@ export default function PosterWall() {
         </a>
 
         <div className="manifesto-nav__right">
+          <a href="#stories" className="nav-mono-link" onClick={() => playClick()}>STORIES</a>
           <a href="#dates" className="nav-mono-link" onClick={() => playClick()}>TOUR DATES</a>
           <a
             className="manifesto-nav__pill-btn"
@@ -257,6 +259,18 @@ export default function PosterWall() {
         direction={-1}
         className="velocity-marquee--dark"
         text="NO LAPTOPS · 21 UNCENSORED BITS · REAL CROWD WORK · PULL A PASS · BOOK YOUR EVENT · "
+      />
+
+      {/* -------------------------------------------------------------
+          SECTION 3b: STORIES SHOWCASE (YOUTUBE VIDEO WALL)
+      -------------------------------------------------------------- */}
+      <StoriesShowcase />
+
+      {/* Marquee Band 3 */}
+      <VelocityMarquee
+        direction={1}
+        className="velocity-marquee--lime"
+        text="WATCH THE SET · FULL BITS · CROWD WORK · YOUTUBE · JIMMY OYE · "
       />
 
       {/* -------------------------------------------------------------
